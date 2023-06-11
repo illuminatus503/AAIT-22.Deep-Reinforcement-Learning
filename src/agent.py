@@ -7,6 +7,29 @@ from .dueling_network import DuelingDeepQNetwork
 
 
 class Agent:
+    def __init_adversarial_qnets(self):
+        # Crea el directorio tmp, si no existe.
+        os.makedirs(self._chkpt_dir, exist_ok=True)
+
+        # Crea las redes Q1 y Q2 para Double DQN
+        self._q_eval = DuelingDeepQNetwork(
+            lr=self._lr,
+            n_actions=self._n_actions,
+            input_dim=self._input_dim,
+            name="LunarLander_Dueling_Double_DQN_eval",
+            chkptr_dir=self._chkpt_dir,
+            device=self._device,
+        )
+
+        self._q_next = DuelingDeepQNetwork(
+            lr=self._lr,
+            n_actions=self._n_actions,
+            input_dim=self._input_dim,
+            name="LunarLander_Dueling_Double_DQN_next",
+            chkptr_dir=self._chkpt_dir,
+            device=self._device,
+        )
+
     def __init__(
         self,
         gamma: float,
@@ -20,112 +43,112 @@ class Agent:
         eps_dec: float = 5e-7,
         replace: int = int(1e3),
         chkpt_dir: str = "tmp/dueling_ddqn",
+        device: T.device | str = "cpu",
     ):
-        self.gamma = gamma
-        self.epsilon = epsilon
-        self.lr = lr
+        # Hiperparámetros del proceso de RL
+        self._gamma = gamma
 
-        self.n_actions = n_actions
-        self.action_space = [i for i in range(n_actions)]
+        self._lr = lr
 
-        self.input_dim = input_dim
-        self.batch_size = batch_size
-        self.eps_min = eps_min
-        self.eps_dec = eps_dec
+        self._eps = epsilon
+        self._eps_min = eps_min
+        self._eps_dec = eps_dec
 
-        self.learn_step_counter = 0
-        self.replace_target_cnt = replace
-        self.chkpt_dir = chkpt_dir
-        os.makedirs(chkpt_dir, exist_ok=True)
+        self._n_actions = n_actions
 
-        self.memory = ReplayBuffer(mem_size, input_dim)
+        self._input_dim = input_dim
+        self._batch_size = batch_size
+
+        self._chkpt_dir = chkpt_dir
+
+        self._step = 0
+        self._replace_target = replace
+
+        # Selecciona el dispositivo de la simulación principal
+        self._device = device
+
+        # Replay Buffer
+        self._memory = ReplayBuffer(mem_size, input_dim, self._device)
 
         # Evaluation functions
-        self.q_eval = DuelingDeepQNetwork(
-            lr=lr,
-            n_actions=n_actions,
-            input_dim=input_dim,
-            name="LunarLander_Dueling_Double_DQN_eval",
-            chkptr_dir=self.chkpt_dir,
-        )
-        self.q_next = DuelingDeepQNetwork(
-            lr=lr,
-            n_actions=n_actions,
-            input_dim=input_dim,
-            name="LunarLander_Dueling_Double_DQN_next",
-            chkptr_dir=self.chkpt_dir,
-        )
+        self.__init_adversarial_qnets()
 
-    def choose_action(self, observation):
-        if np.random.random() > self.epsilon:
-            state = T.tensor(np.array([observation]), dtype=T.float).to(
-                self.q_eval.device
-            )
-            _, advantage = self.q_eval.forward(state)
+    @property
+    def eps(self):
+        return self._eps
+
+    def choose_action(self, state):
+        if np.random.random() > self._eps:
+            state = T.from_numpy(state).to(self._device)
+            _, advantage = self._q_eval.forward(state)
             action = T.argmax(advantage).item()
         else:
-            action = np.random.choice(self.action_space)
+            action = np.random.choice(a=self._n_actions)
         return action
 
-    def store_transition(self, state, action, reward, state_, done):
-        self.memory.store_transition(state, action, reward, state_, done)
-
-    def replace_target_network(self):
-        if self.learn_step_counter % self.replace_target_cnt == 0:
-            self.q_next.load_state_dict(self.q_eval.state_dict())
+    def store_transition(self, state, action, reward, next_state, done):
+        self._memory.store_transition(
+            T.from_numpy(state), action, reward, T.from_numpy(next_state), done
+        )
 
     def decrement_epsilon(self):
-        self.epsilon = (
-            self.epsilon - self.eps_dec if self.epsilon > self.eps_min else self.eps_min
-        )
+        if self._eps > self._eps_min:
+            self._eps -= self._eps_dec
+
+            if self._eps < self._eps_min:
+                self._eps = self._eps_min
 
     def save_models(self):
-        self.q_eval.save_checkpoint()
-        self.q_next.save_checkpoint()
+        self._q_eval.save_checkpoint()
+        self._q_next.save_checkpoint()
 
     def load_models(self):
-        self.q_eval.load_checkpoint()
-        self.q_next.load_checkpoint()
+        self._q_eval.load_checkpoint()
+        self._q_next.load_checkpoint()
 
-    def learn(self):
-        if self.memory.mem_cntr < self.batch_size:
-            return
-
-        self.q_eval.optimiser.zero_grad()
-
-        # Do we have to replace?
-        self.replace_target_network()
-
-        state, action, reward, new_state, done = self.memory.sample_buffer(
-            self.batch_size
+    def __train(self):
+        # Sample Replay buffer antes de entrenar.
+        states, actions, rewards, next_states, dones = self._memory.sample_buffer(
+            self._batch_size
         )
+        indices = np.arange(self._batch_size)  # Indices to treat
 
-        states = T.tensor(state).to(self.q_eval.device)
-        actions = T.tensor(action).to(self.q_eval.device)
-        rewards = T.tensor(reward).to(self.q_eval.device)
-        states_ = T.tensor(new_state).to(self.q_eval.device)
-        dones = T.tensor(done).to(self.q_eval.device)
+        ## Entrenamos! Solamente entrenamos Q1 (q_eval)
+        ## Q2 (q_next) es una copia anterior de Q1 o random (al principio)
 
-        indices = np.arange(self.batch_size)  # Indices to treat
-
-        V_s, A_s = self.q_eval.forward(states)
-        V_s_, A_s_ = self.q_next.forward(states_)
-
-        V_s_eval, A_s_eval = self.q_eval.forward(states_)  # Double DQN: for update rule
-
-        # Adding together the networks
+        # Evaluación & train
+        self._q_eval.optimiser.zero_grad()
+        V_s, A_s = self._q_eval.forward(states)
         q_pred = T.add(V_s, (A_s - A_s.mean(dim=1, keepdim=True)))[indices, actions]
-        q_next = T.add(V_s_, (A_s_ - A_s_.mean(dim=1, keepdim=True)))
-        q_eval = T.add(V_s_eval, (A_s_eval - A_s_eval.mean(dim=1, keepdim=True)))
 
+        # Solo evaluación
+        V_s_, A_s_ = self._q_next.forward(next_states)
+        q_next = T.add(V_s_, (A_s_ - A_s_.mean(dim=1, keepdim=True)))
+        q_next[dones] = 0.0  # If terminated state, 0 else its value
+
+        # Vamos a intentar aproximar el q_target = R + gamma * Q2 por Q1.
+        V_s_eval, A_s_eval = self._q_eval.forward(next_states)
+        q_eval = T.add(V_s_eval, (A_s_eval - A_s_eval.mean(dim=1, keepdim=True)))
         max_actions = T.argmax(q_eval, dim=1)
 
-        q_next[dones] = 0.0  # If terminated state, 0 else its value
-        q_target = rewards + self.gamma * q_next[indices, max_actions]
+        q_target = rewards + self._gamma * q_next[indices, max_actions]
 
-        loss = self.q_eval.loss(q_target, q_pred).to(self.q_eval.device)
+        loss = self._q_eval.loss(q_target, q_pred)
         loss.backward()
-        self.q_eval.optimiser.step()
-        self.learn_step_counter += 1
+        self._q_eval.optimiser.step()
 
+    def learn(self):
+        # Hay suficientes elementos en la memoria como para extraer un batch?
+        if self._memory._mem_idx < self._batch_size:
+            return
+
+        # Hay que intercambiar las redes Q1 y Q2?
+        if self._step % self._replace_target == 0:
+            self._q_next.load_state_dict(self._q_eval.state_dict())
+        self._step += 1
+
+        # Por cada paso de entrenamiento, decr. eps.
         self.decrement_epsilon()
+        
+        # Y, finalmente, entrenamos.
+        self.__train()

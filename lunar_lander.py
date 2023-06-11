@@ -7,6 +7,7 @@ import gymnasium as gym
 from gymnasium.wrappers.monitoring.video_recorder import VideoRecorder
 
 import numpy as np
+import torch as T
 
 from src.agent import Agent
 
@@ -15,7 +16,7 @@ def load_env(env_id: str) -> gym.Env:
     return gym.make(id=env_id, continuous=False)
 
 
-def load_agent(load_checkpoint: bool = False) -> Agent:
+def load_agent(load_checkpoint: bool = False, device: T.device | str = "cpu") -> Agent:
     agent = Agent(
         gamma=0.99,
         epsilon=1.0,
@@ -27,6 +28,7 @@ def load_agent(load_checkpoint: bool = False) -> Agent:
         batch_size=64,
         eps_dec=1e-3,
         replace=100,
+        device=device,
     )
 
     if load_checkpoint:
@@ -76,29 +78,64 @@ def run_game(env: gym.Env, agent: Agent) -> float:
     return score
 
 
-def train_agent(num_games: int, env: gym.Env, agent: Agent, game_sample: int = 100):
-    scores = []
-    eps_history = []
+def train_agent(
+    num_games: int,
+    env: gym.Env,
+    agent: Agent,
+    game_sample: int = 100,
+    save_period: int = 10,
+):
+    saved_scores = np.zeros(shape=(save_period, 1))
+    scores = np.zeros(shape=(game_sample, 1))
+    scores_length = 0
+    score_idx = 0
+
+    prev_avg_score = -float("inf")
 
     for i in range(num_games):
         # ! Ejecutar una partida sobre el entorno
         score = run_game(env, agent)
 
         # Guardamos los resultados parciales
-        scores.append(score)
-        eps_history.append(agent.epsilon)
+        if scores_length < game_sample:
+            scores_length += 1
 
-        if i % 10 == 0:
-            avg_score = np.mean(scores[-game_sample:])
-            avg_eps = np.mean(eps_history[-game_sample:])
-            print(
-                f"Episode T={i:4d} | "
-                f"Score : {score:1.2f} | "
-                f"Avg. score last {game_sample:3d} games : {avg_score:1.3f} | "
-                f"Avg. agent eps last {game_sample:3d} games : {avg_eps:1.3f} "
-            )
+        if score_idx == game_sample:
+            score_idx = 0
 
-            agent.save_models()
+        scores[score_idx] = score
+        score_idx += 1
+
+        # Calculamos el avg_score
+        avg_score = np.mean(scores[:scores_length])
+
+        print(
+            f"Episode T={i + 1:4d} / {num_games} | "
+            f"Score : {score:1.2f} | "
+            f"Agent eps. : {agent.eps:1.3f} | "
+            f"Avg. score, last {game_sample:3d} games : {avg_score:1.3f}"
+        )
+
+        if (i > 0) and (i % save_period == 0):
+            save_range = np.arange(save_period)
+            if prev_avg_score < avg_score:
+                print("Saving model...")
+                agent.save_models()
+                prev_avg_score = avg_score
+
+                save_range = (
+                    np.arange(score_idx - 1, score_idx - 1 + save_period) % game_sample
+                )
+                saved_scores = scores[save_range]
+            else:
+                print(f"Current score: {avg_score:1.4f} < {prev_avg_score:1.4f}")
+                print("Restoring prev. model...")
+                agent.load_models()
+
+                # Restauramos los scores al estado anterior.
+                scores[save_range] = saved_scores
+                if scores_length < game_sample:
+                    scores_length -= game_sample
 
 
 def remove_videos_from(video_folder: str):
@@ -124,7 +161,9 @@ def create_video_env(env_id: str, video_folder: str) -> tuple[gym.Env, VideoReco
 
     env = gym.make(id=env_id, render_mode="rgb_array")
     video_recorder = VideoRecorder(
-        env, path=f"{video_folder}/render.mp4", enabled=f"{video_folder}/render.mp4" is not None
+        env,
+        path=f"{video_folder}/render.mp4",
+        enabled=f"{video_folder}/render.mp4" is not None,
     )
 
     return env, video_recorder
@@ -163,14 +202,23 @@ def generate_playback_video(video_folder: str, env_id: str, agent: Agent) -> flo
 
 
 def main(load_checkpoint=False):
+    num_games = 500
+    game_sample = 100
+    save_period = 10
     env_id = "LunarLander-v2"
-    agent = load_agent(load_checkpoint)
+    device = T.device("cuda:0" if T.cuda.is_available() else "cpu")
+
+    # Creamos el agente.
+    agent = load_agent(load_checkpoint, device)
 
     if not load_checkpoint:
         # Train the agent on the environment, for 500 games.
+        print(f"Begin train for num_games={num_games}")
         env = load_env(env_id)
-        train_agent(500, env, agent)
+        train_agent(num_games, env, agent, game_sample, save_period)
         env.close()
+    else:
+        print("Loading checkpoint...")
 
     # Record a video
     test_score = generate_playback_video("videos", env_id, agent)
@@ -178,10 +226,4 @@ def main(load_checkpoint=False):
 
 
 if __name__ == "__main__":
-    n = len(sys.argv)
-    load_checkpoint = False
-
-    if n == 2 and (sys.argv[1] == "-chkpoint"):
-        load_checkpoint = True
-
-    main(load_checkpoint)
+    main(load_checkpoint=(len(sys.argv) == 2 and (sys.argv[1] == "-chkpoint")))
