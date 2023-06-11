@@ -2,6 +2,7 @@ from typing import SupportsFloat
 import glob
 import os
 import sys
+import argparse
 
 import gymnasium as gym
 from gymnasium.wrappers.monitoring.video_recorder import VideoRecorder
@@ -13,22 +14,29 @@ from src.agent import Agent
 
 
 def load_env(env_id: str) -> gym.Env:
-    return gym.make(id=env_id, continuous=False)
+    return gym.make(id=env_id)
 
 
-def load_agent(load_checkpoint: bool = False, device: T.device | str = "cpu") -> Agent:
+def load_agent(
+    chdir,
+    input_dim,
+    n_actions,
+    load_checkpoint: bool = False,
+    device: T.device | str = "cpu",
+) -> Agent:
     agent = Agent(
         gamma=0.99,
         epsilon=1.0,
         lr=5e-4,
-        input_dim=8,
-        n_actions=4,
+        input_dim=input_dim,
+        n_actions=n_actions,
         mem_size=int(1e6),
         eps_min=1e-2,
         batch_size=64,
         eps_dec=1e-4,
         replace=100,
         device=device,
+        chkpt_dir=chdir,
     )
 
     if load_checkpoint:
@@ -57,14 +65,14 @@ def get_next_state(env: gym.Env, action) -> tuple[None, SupportsFloat, int, dict
     return (observation, reward, done, info)
 
 
-def run_game(env: gym.Env, agent: Agent) -> float:
+def run_training_step(env: gym.Env, agent: Agent) -> float:
     done = False
     score = 0.0
 
     # Iniciamos el entorno en el estado inicial.
     state = reset_env(env)
     while not done:
-        action = agent.choose_action(state)
+        action = agent.choose_action(state, is_training=True)
         next_state, reward, done, _ = get_next_state(env, action)
 
         # Guardaríamos una observación y aprenderíamos.
@@ -89,8 +97,7 @@ def train_agent(
     prev_avg_score = -float("inf")
 
     for i in range(1, num_games + 1):
-        # ! Ejecutar una partida sobre el entorno
-        score = run_game(env, agent)
+        score = run_training_step(env, agent)
 
         # Guardamos los resultados parciales
         score_stack.append(score)
@@ -136,14 +143,12 @@ def create_videodir(video_folder: str):
         remove_videos_from(video_folder)
 
 
-def create_video_env(env_id: str, video_folder: str) -> tuple[gym.Env, VideoRecorder]:
-    create_videodir(video_folder)
-
+def create_video_env(env_id: str, video_path: str) -> tuple[gym.Env, VideoRecorder]:
     env = gym.make(id=env_id, render_mode="rgb_array")
     video_recorder = VideoRecorder(
         env,
-        path=f"{video_folder}/render.mp4",
-        enabled=f"{video_folder}/render.mp4" is not None,
+        path=video_path,
+        enabled=video_path is not None,
     )
 
     return env, video_recorder
@@ -174,24 +179,46 @@ def render_game(video_recorder: VideoRecorder, env: gym.Env, agent: Agent) -> fl
 
 
 def generate_playback_video(video_folder: str, env_id: str, agent: Agent) -> float:
-    env, video_recorder = create_video_env(env_id, video_folder)
+    create_videodir(video_folder)
+    video_path = f'{video_folder}/{env_id}_render.mp4'
+    
+    env, video_recorder = create_video_env(env_id, video_path)
     score = render_game(video_recorder, env, agent)
     env.close()
     video_recorder.close()
     return score
 
 
-def main(load_checkpoint=False):
-    num_games = 500
-    game_sample = 100
-    save_period = 10
-    env_id = "LunarLander-v2"
+def main():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("--env", type=str)
+    parser.add_argument("--input-dim", type=int)
+    parser.add_argument("--actions", type=int)
+    parser.add_argument("--num-games", type=int, default=150)
+    parser.add_argument("--avg-sample", type=int, default=100)
+    parser.add_argument("--save-period", type=int, default=10)
+    parser.add_argument("--checkpoint", action='store_true')
+    # parser.add_argument("--continuous", action='store_true')
+
+    args = parser.parse_args()
+    env_id = args.env
+    num_games = args.num_games
+    game_sample = args.avg_sample
+    save_period = args.save_period
+
     device = T.device("cuda:0" if T.cuda.is_available() else "cpu")
 
     # Creamos el agente.
-    agent = load_agent(load_checkpoint, device)
+    agent = load_agent(
+        chdir=f"tmp/{env_id}",
+        input_dim=args.input_dim,
+        n_actions=args.actions,
+        load_checkpoint=args.checkpoint,
+        device=device,
+    )
 
-    if not load_checkpoint:
+    if not args.checkpoint:
         # Train the agent on the environment, for 500 games.
         print(f"Begin train for num_games={num_games}")
         env = load_env(env_id)
@@ -201,9 +228,9 @@ def main(load_checkpoint=False):
         print("Loading checkpoint...")
 
     # Record a video
-    test_score = generate_playback_video("videos", env_id, agent)
+    test_score = generate_playback_video(f"tmp/{env_id}", env_id, agent)
     print(f"**TEST SCORE: {test_score:1.3f}")
 
 
 if __name__ == "__main__":
-    main(load_checkpoint=(len(sys.argv) == 2 and (sys.argv[1] == "-chkpoint")))
+    main()

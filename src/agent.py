@@ -16,7 +16,7 @@ class Agent:
             lr=self._lr,
             n_actions=self._n_actions,
             input_dim=self._input_dim,
-            name="LunarLander_Dueling_Double_DQN_eval",
+            name="q_func_evaluator.plk",
             chkptr_dir=self._chkpt_dir,
             device=self._device,
         )
@@ -25,7 +25,7 @@ class Agent:
             lr=self._lr,
             n_actions=self._n_actions,
             input_dim=self._input_dim,
-            name="LunarLander_Dueling_Double_DQN_next",
+            name="q_func_evnext.plk",
             chkptr_dir=self._chkpt_dir,
             device=self._device,
         )
@@ -42,7 +42,7 @@ class Agent:
         eps_min: float = 1e-2,
         eps_dec: float = 5e-7,
         replace: int = int(1e3),
-        chkpt_dir: str = "tmp/dueling_ddqn",
+        chkpt_dir: str = "tmp",
         device: T.device | str = "cpu",
     ):
         # Hiperparámetros del proceso de RL
@@ -68,7 +68,14 @@ class Agent:
         self._device = device
 
         # Replay Buffer
-        self._memory = ReplayBuffer(mem_size, input_dim, self._device)
+        self._memory = ReplayBuffer(
+            mem_size=mem_size,
+            input_dim=input_dim,
+            device=self._device,
+            alpha=self._lr,
+            beta=0.4,
+            kappa=0.6,
+        )
 
         # Evaluation functions
         self.__init_adversarial_qnets()
@@ -84,8 +91,8 @@ class Agent:
             if self._eps < self._eps_min:
                 self._eps = self._eps_min
 
-    def choose_action(self, state):
-        if np.random.random() > self._eps:
+    def choose_action(self, state, is_training=False):
+        if (not is_training) or (np.random.random() > self._eps):
             state = T.from_numpy(state).to(self._device)
             _, advantage = self._q_eval.forward(state)
             action = T.argmax(advantage).item()
@@ -108,7 +115,7 @@ class Agent:
 
     def __train(self):
         # Sample Replay buffer antes de entrenar.
-        states, actions, rewards, next_states, dones = self._memory.sample_buffer(
+        states, actions, rewards, next_states, dones, importance = self._memory.sample_buffer(
             self._batch_size
         )
         indices = np.arange(self._batch_size)  # Indices to treat
@@ -133,13 +140,21 @@ class Agent:
 
         q_target = rewards + self._gamma * q_next[indices, max_actions]
 
-        loss = self._q_eval.loss(q_target, q_pred)
+        # ! Prioritised experience replay
+        error = q_target - q_pred
+        error_ = T.clone(error).detach().flatten()
+        self._memory.update_priorities(indices, error_)
+        
+        importance = importance.view((-1, 1))
+        loss = T.mean(importance * error ** 2)
+        # ! END Prioritised experience replay
+        
         loss.backward()
         self._q_eval.optimiser.step()
 
     def learn(self):
         # Hay suficientes elementos en la memoria como para extraer un batch?
-        if self._memory._mem_idx < self._batch_size:
+        if len(self._memory) < self._batch_size:
             return
 
         # Hay que intercambiar las redes Q1 y Q2?
