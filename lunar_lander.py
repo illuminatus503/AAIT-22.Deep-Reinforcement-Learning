@@ -26,7 +26,7 @@ def load_agent(load_checkpoint: bool = False, device: T.device | str = "cpu") ->
         mem_size=int(1e6),
         eps_min=1e-2,
         batch_size=64,
-        eps_dec=1e-3,
+        eps_dec=1e-4,
         replace=100,
         device=device,
     )
@@ -85,57 +85,37 @@ def train_agent(
     game_sample: int = 100,
     save_period: int = 10,
 ):
-    saved_scores = np.zeros(shape=(save_period, 1))
-    scores = np.zeros(shape=(game_sample, 1))
-    scores_length = 0
-    score_idx = 0
-
+    score_stack = []
     prev_avg_score = -float("inf")
 
-    for i in range(num_games):
+    for i in range(1, num_games + 1):
         # ! Ejecutar una partida sobre el entorno
         score = run_game(env, agent)
 
         # Guardamos los resultados parciales
-        if scores_length < game_sample:
-            scores_length += 1
-
-        if score_idx == game_sample:
-            score_idx = 0
-
-        scores[score_idx] = score
-        score_idx += 1
-
-        # Calculamos el avg_score
-        avg_score = np.mean(scores[:scores_length])
+        score_stack.append(score)
+        avg_score = np.mean(score_stack[-game_sample:])
 
         print(
-            f"Episode T={i + 1:4d} / {num_games} | "
+            f"Episode T={i:4d} / {num_games} | "
             f"Score : {score:1.2f} | "
             f"Agent eps. : {agent.eps:1.3f} | "
             f"Avg. score, last {game_sample:3d} games : {avg_score:1.3f}"
         )
 
-        if (i > 0) and (i % save_period == 0):
-            save_range = np.arange(save_period)
+        if i % save_period == 0:
             if prev_avg_score < avg_score:
                 print("Saving model...")
                 agent.save_models()
-                prev_avg_score = avg_score
 
-                save_range = (
-                    np.arange(score_idx - 1, score_idx - 1 + save_period) % game_sample
-                )
-                saved_scores = scores[save_range]
+                prev_avg_score = avg_score
             else:
-                print(f"Current score: {avg_score:1.4f} < {prev_avg_score:1.4f}")
+                print(f"Current score: {avg_score:1.3f} < {prev_avg_score:1.3f}")
                 print("Restoring prev. model...")
                 agent.load_models()
 
-                # Restauramos los scores al estado anterior.
-                scores[save_range] = saved_scores
-                if scores_length < game_sample:
-                    scores_length -= game_sample
+                avg_score = prev_avg_score
+                del score_stack[-save_period:]
 
 
 def remove_videos_from(video_folder: str):

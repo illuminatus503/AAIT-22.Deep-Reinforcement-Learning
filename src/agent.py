@@ -77,6 +77,13 @@ class Agent:
     def eps(self):
         return self._eps
 
+    def decrement_epsilon(self):
+        if self._eps > self._eps_min:
+            self._eps -= self._eps_dec
+
+            if self._eps < self._eps_min:
+                self._eps = self._eps_min
+
     def choose_action(self, state):
         if np.random.random() > self._eps:
             state = T.from_numpy(state).to(self._device)
@@ -90,13 +97,6 @@ class Agent:
         self._memory.store_transition(
             T.from_numpy(state), action, reward, T.from_numpy(next_state), done
         )
-
-    def decrement_epsilon(self):
-        if self._eps > self._eps_min:
-            self._eps -= self._eps_dec
-
-            if self._eps < self._eps_min:
-                self._eps = self._eps_min
 
     def save_models(self):
         self._q_eval.save_checkpoint()
@@ -149,6 +149,6 @@ class Agent:
 
         # Por cada paso de entrenamiento, decr. eps.
         self.decrement_epsilon()
-        
+
         # Y, finalmente, entrenamos.
         self.__train()

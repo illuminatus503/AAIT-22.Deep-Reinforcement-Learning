@@ -1,0 +1,591 @@
+(AAIT-22.DeepRL)  davidcncmarcos@DESKTOP-8HCPQ6F  ~/Desktop/DoubleDQN   master ±  python lunar_lander.py
+Begin train for num_games=500
+Episode T=   1 / 500 | Score : -92653.43 | Agent eps. : 0.906 | Avg. score, last 100 games : -92653.429
+Episode T=   2 / 500 | Score : -88484.12 | Agent eps. : 0.806 | Avg. score, last 100 games : -90568.776
+Episode T=   3 / 500 | Score : -85968.75 | Agent eps. : 0.706 | Avg. score, last 100 games : -89035.433
+Episode T=   4 / 500 | Score : -92539.42 | Agent eps. : 0.606 | Avg. score, last 100 games : -89911.431
+Episode T=   5 / 500 | Score : -88634.35 | Agent eps. : 0.506 | Avg. score, last 100 games : -89656.015
+Episode T=   6 / 500 | Score : -90473.39 | Agent eps. : 0.406 | Avg. score, last 100 games : -89792.243
+Episode T=   7 / 500 | Score : -75181.46 | Agent eps. : 0.306 | Avg. score, last 100 games : -87704.989
+Episode T=   8 / 500 | Score : -90526.53 | Agent eps. : 0.206 | Avg. score, last 100 games : -88057.682
+Episode T=   9 / 500 | Score : -86989.19 | Agent eps. : 0.106 | Avg. score, last 100 games : -87938.961
+Episode T=  10 / 500 | Score : -93958.25 | Agent eps. : 0.010 | Avg. score, last 100 games : -88540.889
+Saving model...
+Episode T=  11 / 500 | Score : -95029.75 | Agent eps. : 0.010 | Avg. score, last 100 games : -89130.786
+Episode T=  12 / 500 | Score : -93817.44 | Agent eps. : 0.010 | Avg. score, last 100 games : -89521.340
+Episode T=  13 / 500 | Score : -87914.10 | Agent eps. : 0.010 | Avg. score, last 100 games : -89397.706
+Episode T=  14 / 500 | Score : -91712.26 | Agent eps. : 0.010 | Avg. score, last 100 games : -89563.031
+Episode T=  15 / 500 | Score : -91085.67 | Agent eps. : 0.010 | Avg. score, last 100 games : -89664.541
+Episode T=  16 / 500 | Score : -94912.37 | Agent eps. : 0.010 | Avg. score, last 100 games : -89992.530
+Episode T=  17 / 500 | Score : -92704.88 | Agent eps. : 0.010 | Avg. score, last 100 games : -90152.080
+Episode T=  18 / 500 | Score : -93899.68 | Agent eps. : 0.010 | Avg. score, last 100 games : -90360.280
+Episode T=  19 / 500 | Score : -91148.96 | Agent eps. : 0.010 | Avg. score, last 100 games : -90401.790
+Episode T=  20 / 500 | Score : -85093.30 | Agent eps. : 0.010 | Avg. score, last 100 games : -90136.365
+Current score: -90136.365 < -88540.889
+Restoring prev. model...
+Episode T=  21 / 500 | Score : -94608.14 | Agent eps. : 0.010 | Avg. score, last 100 games : -89092.458
+Episode T=  22 / 500 | Score : -31222.49 | Agent eps. : 0.010 | Avg. score, last 100 games : -84269.960
+Episode T=  23 / 500 | Score : 35751.32 | Agent eps. : 0.010 | Avg. score, last 100 games : -75037.554
+Episode T=  24 / 500 | Score : 67240.62 | Agent eps. : 0.010 | Avg. score, last 100 games : -64874.827
+Episode T=  25 / 500 | Score : 47585.96 | Agent eps. : 0.010 | Avg. score, last 100 games : -57377.442
+Episode T=  26 / 500 | Score : 17157.00 | Agent eps. : 0.010 | Avg. score, last 100 games : -52719.039
+Episode T=  27 / 500 | Score : 13047.16 | Agent eps. : 0.010 | Avg. score, last 100 games : -48850.439
+Episode T=  28 / 500 | Score : 46412.23 | Agent eps. : 0.010 | Avg. score, last 100 games : -43558.068
+Episode T=  29 / 500 | Score : 4859.40 | Agent eps. : 0.010 | Avg. score, last 100 games : -41009.780
+Episode T=  30 / 500 | Score : 36373.45 | Agent eps. : 0.010 | Avg. score, last 100 games : -37140.619
+Saving model...
+Episode T=  31 / 500 | Score : 10149.58 | Agent eps. : 0.010 | Avg. score, last 100 games : -34888.704
+Episode T=  32 / 500 | Score : 44411.94 | Agent eps. : 0.010 | Avg. score, last 100 games : -31284.130
+Episode T=  33 / 500 | Score : 39679.69 | Agent eps. : 0.010 | Avg. score, last 100 games : -28198.746
+Episode T=  34 / 500 | Score : 9794.25 | Agent eps. : 0.010 | Avg. score, last 100 games : -26615.705
+Episode T=  35 / 500 | Score : 25093.32 | Agent eps. : 0.010 | Avg. score, last 100 games : -24547.344
+Episode T=  36 / 500 | Score : -89906.58 | Agent eps. : 0.010 | Avg. score, last 100 games : -27061.160
+Episode T=  37 / 500 | Score : -93376.79 | Agent eps. : 0.010 | Avg. score, last 100 games : -29517.295
+Episode T=  38 / 500 | Score : 41368.15 | Agent eps. : 0.010 | Avg. score, last 100 games : -26985.672
+Episode T=  39 / 500 | Score : 50300.21 | Agent eps. : 0.010 | Avg. score, last 100 games : -24320.641
+Episode T=  40 / 500 | Score : 34185.31 | Agent eps. : 0.010 | Avg. score, last 100 games : -22370.443
+Saving model...
+Episode T=  41 / 500 | Score : 32844.23 | Agent eps. : 0.010 | Avg. score, last 100 games : -20589.324
+Episode T=  42 / 500 | Score : 28136.71 | Agent eps. : 0.010 | Avg. score, last 100 games : -19066.636
+Episode T=  43 / 500 | Score : -90662.97 | Agent eps. : 0.010 | Avg. score, last 100 games : -21236.222
+Episode T=  44 / 500 | Score : 32678.02 | Agent eps. : 0.010 | Avg. score, last 100 games : -19650.509
+Episode T=  45 / 500 | Score : 32330.62 | Agent eps. : 0.010 | Avg. score, last 100 games : -18165.334
+Episode T=  46 / 500 | Score : 46274.96 | Agent eps. : 0.010 | Avg. score, last 100 games : -16375.325
+Episode T=  47 / 500 | Score : 15050.61 | Agent eps. : 0.010 | Avg. score, last 100 games : -15525.976
+Episode T=  48 / 500 | Score : 32663.68 | Agent eps. : 0.010 | Avg. score, last 100 games : -14257.827
+Episode T=  49 / 500 | Score : -76582.86 | Agent eps. : 0.010 | Avg. score, last 100 games : -15855.905
+Episode T=  50 / 500 | Score : -93586.29 | Agent eps. : 0.010 | Avg. score, last 100 games : -17799.164
+Saving model...
+Episode T=  51 / 500 | Score : 16996.37 | Agent eps. : 0.010 | Avg. score, last 100 games : -16950.493
+Episode T=  52 / 500 | Score : 29154.00 | Agent eps. : 0.010 | Avg. score, last 100 games : -15852.767
+Episode T=  53 / 500 | Score : 47574.44 | Agent eps. : 0.010 | Avg. score, last 100 games : -14377.715
+Episode T=  54 / 500 | Score : 36504.50 | Agent eps. : 0.010 | Avg. score, last 100 games : -13221.301
+Episode T=  55 / 500 | Score : 29049.09 | Agent eps. : 0.010 | Avg. score, last 100 games : -12281.959
+Episode T=  56 / 500 | Score : 36574.60 | Agent eps. : 0.010 | Avg. score, last 100 games : -11219.860
+Episode T=  57 / 500 | Score : 38471.99 | Agent eps. : 0.010 | Avg. score, last 100 games : -10162.587
+Episode T=  58 / 500 | Score : 41176.78 | Agent eps. : 0.010 | Avg. score, last 100 games : -9093.017
+Episode T=  59 / 500 | Score : 42685.32 | Agent eps. : 0.010 | Avg. score, last 100 games : -8036.316
+Episode T=  60 / 500 | Score : 42942.66 | Agent eps. : 0.010 | Avg. score, last 100 games : -7016.737
+Saving model...
+Episode T=  61 / 500 | Score : 31301.21 | Agent eps. : 0.010 | Avg. score, last 100 games : -6265.404
+Episode T=  62 / 500 | Score : 2094.39 | Agent eps. : 0.010 | Avg. score, last 100 games : -6104.639
+Episode T=  63 / 500 | Score : -91361.83 | Agent eps. : 0.010 | Avg. score, last 100 games : -7713.265
+Episode T=  64 / 500 | Score : 66879.78 | Agent eps. : 0.010 | Avg. score, last 100 games : -6331.913
+Episode T=  65 / 500 | Score : 40166.25 | Agent eps. : 0.010 | Avg. score, last 100 games : -5486.492
+Episode T=  66 / 500 | Score : 43824.50 | Agent eps. : 0.010 | Avg. score, last 100 games : -4605.938
+Episode T=  67 / 500 | Score : 64102.47 | Agent eps. : 0.010 | Avg. score, last 100 games : -3400.527
+Episode T=  68 / 500 | Score : 44481.47 | Agent eps. : 0.010 | Avg. score, last 100 games : -2574.976
+Episode T=  69 / 500 | Score : 33284.70 | Agent eps. : 0.010 | Avg. score, last 100 games : -1967.185
+Episode T=  70 / 500 | Score : 4754.17 | Agent eps. : 0.010 | Avg. score, last 100 games : -1855.162
+Saving model...
+Episode T=  71 / 500 | Score : 42189.84 | Agent eps. : 0.010 | Avg. score, last 100 games : -1133.113
+Episode T=  72 / 500 | Score : 38260.86 | Agent eps. : 0.010 | Avg. score, last 100 games : -497.726
+Episode T=  73 / 500 | Score : -91602.85 | Agent eps. : 0.010 | Avg. score, last 100 games : -1943.839
+Episode T=  74 / 500 | Score : 61497.06 | Agent eps. : 0.010 | Avg. score, last 100 games : -952.575
+Episode T=  75 / 500 | Score : 10347.66 | Agent eps. : 0.010 | Avg. score, last 100 games : -778.726
+Episode T=  76 / 500 | Score : 39165.47 | Agent eps. : 0.010 | Avg. score, last 100 games : -173.511
+Episode T=  77 / 500 | Score : -92168.78 | Agent eps. : 0.010 | Avg. score, last 100 games : -1546.574
+Episode T=  78 / 500 | Score : -84643.80 | Agent eps. : 0.010 | Avg. score, last 100 games : -2768.592
+Episode T=  79 / 500 | Score : 48143.99 | Agent eps. : 0.010 | Avg. score, last 100 games : -2030.729
+Episode T=  80 / 500 | Score : 52245.60 | Agent eps. : 0.010 | Avg. score, last 100 games : -1255.353
+Saving model...
+Episode T=  81 / 500 | Score : 41704.92 | Agent eps. : 0.010 | Avg. score, last 100 games : -650.278
+Episode T=  82 / 500 | Score : -11539.43 | Agent eps. : 0.010 | Avg. score, last 100 games : -801.517
+Episode T=  83 / 500 | Score : 10041.60 | Agent eps. : 0.010 | Avg. score, last 100 games : -652.981
+Episode T=  84 / 500 | Score : -94242.66 | Agent eps. : 0.010 | Avg. score, last 100 games : -1917.706
+Episode T=  85 / 500 | Score : 36777.47 | Agent eps. : 0.010 | Avg. score, last 100 games : -1401.771
+Episode T=  86 / 500 | Score : -94171.30 | Agent eps. : 0.010 | Avg. score, last 100 games : -2622.422
+Episode T=  87 / 500 | Score : -3735.43 | Agent eps. : 0.010 | Avg. score, last 100 games : -2636.877
+Episode T=  88 / 500 | Score : 48274.64 | Agent eps. : 0.010 | Avg. score, last 100 games : -1984.165
+Episode T=  89 / 500 | Score : 6075.39 | Agent eps. : 0.010 | Avg. score, last 100 games : -1882.146
+Episode T=  90 / 500 | Score : 38319.33 | Agent eps. : 0.010 | Avg. score, last 100 games : -1379.627
+Current score: -1379.627 < -1255.353
+Restoring prev. model...
+Episode T=  91 / 500 | Score : 23043.61 | Agent eps. : 0.010 | Avg. score, last 100 games : -913.114
+Episode T=  92 / 500 | Score : 15489.04 | Agent eps. : 0.010 | Avg. score, last 100 games : -685.306
+Episode T=  93 / 500 | Score : 68306.58 | Agent eps. : 0.010 | Avg. score, last 100 games : 259.788
+Episode T=  94 / 500 | Score : 54149.11 | Agent eps. : 0.010 | Avg. score, last 100 games : 988.022
+Episode T=  95 / 500 | Score : -92557.00 | Agent eps. : 0.010 | Avg. score, last 100 games : -259.245
+Episode T=  96 / 500 | Score : 62703.77 | Agent eps. : 0.010 | Avg. score, last 100 games : 569.216
+Episode T=  97 / 500 | Score : 42854.73 | Agent eps. : 0.010 | Avg. score, last 100 games : 1118.378
+Episode T=  98 / 500 | Score : 41470.18 | Agent eps. : 0.010 | Avg. score, last 100 games : 1635.709
+Episode T=  99 / 500 | Score : 60478.55 | Agent eps. : 0.010 | Avg. score, last 100 games : 2380.555
+Episode T= 100 / 500 | Score : 42170.37 | Agent eps. : 0.010 | Avg. score, last 100 games : 2877.928
+Saving model...
+Episode T= 101 / 500 | Score : 57571.85 | Agent eps. : 0.010 | Avg. score, last 100 games : 3553.162
+Episode T= 102 / 500 | Score : 32402.11 | Agent eps. : 0.010 | Avg. score, last 100 games : 3904.978
+Episode T= 103 / 500 | Score : 19968.07 | Agent eps. : 0.010 | Avg. score, last 100 games : 4098.509
+Episode T= 104 / 500 | Score : 19363.81 | Agent eps. : 0.010 | Avg. score, last 100 games : 4280.239
+Episode T= 105 / 500 | Score : 35604.53 | Agent eps. : 0.010 | Avg. score, last 100 games : 4648.760
+Episode T= 106 / 500 | Score : 33229.65 | Agent eps. : 0.010 | Avg. score, last 100 games : 4981.096
+Episode T= 107 / 500 | Score : 23017.88 | Agent eps. : 0.010 | Avg. score, last 100 games : 5188.415
+Episode T= 108 / 500 | Score : 11365.68 | Agent eps. : 0.010 | Avg. score, last 100 games : 5258.612
+Episode T= 109 / 500 | Score : -6413.98 | Agent eps. : 0.010 | Avg. score, last 100 games : 5127.459
+Episode T= 110 / 500 | Score : 33345.20 | Agent eps. : 0.010 | Avg. score, last 100 games : 5440.989
+Saving model...
+Episode T= 111 / 500 | Score : 49609.34 | Agent eps. : 0.010 | Avg. score, last 100 games : 5926.356
+Episode T= 112 / 500 | Score : -95328.33 | Agent eps. : 0.010 | Avg. score, last 100 games : 4825.761
+Episode T= 113 / 500 | Score : -92274.42 | Agent eps. : 0.010 | Avg. score, last 100 games : 3781.673
+Episode T= 114 / 500 | Score : 42668.62 | Agent eps. : 0.010 | Avg. score, last 100 games : 4195.364
+Episode T= 115 / 500 | Score : 38334.55 | Agent eps. : 0.010 | Avg. score, last 100 games : 4554.724
+Episode T= 116 / 500 | Score : 37475.47 | Agent eps. : 0.010 | Avg. score, last 100 games : 4897.649
+Episode T= 117 / 500 | Score : 57763.28 | Agent eps. : 0.010 | Avg. score, last 100 games : 5442.655
+Episode T= 118 / 500 | Score : 38795.81 | Agent eps. : 0.010 | Avg. score, last 100 games : 5782.993
+Episode T= 119 / 500 | Score : -93291.30 | Agent eps. : 0.010 | Avg. score, last 100 games : 4782.243
+Episode T= 120 / 500 | Score : 27955.67 | Agent eps. : 0.010 | Avg. score, last 100 games : 5013.977
+Current score: 5013.977 < 5440.989
+Restoring prev. model...
+Episode T= 121 / 500 | Score : 39704.60 | Agent eps. : 0.010 | Avg. score, last 100 games : 5817.513
+Episode T= 122 / 500 | Score : -91679.87 | Agent eps. : 0.010 | Avg. score, last 100 games : 4757.758
+Episode T= 123 / 500 | Score : 38936.79 | Agent eps. : 0.010 | Avg. score, last 100 games : 5125.275
+Episode T= 124 / 500 | Score : 25791.80 | Agent eps. : 0.010 | Avg. score, last 100 games : 5345.132
+Episode T= 125 / 500 | Score : -91653.26 | Agent eps. : 0.010 | Avg. score, last 100 games : 4324.096
+Episode T= 126 / 500 | Score : -7557.40 | Agent eps. : 0.010 | Avg. score, last 100 games : 4200.330
+Episode T= 127 / 500 | Score : 35827.90 | Agent eps. : 0.010 | Avg. score, last 100 games : 4526.388
+Episode T= 128 / 500 | Score : 32440.65 | Agent eps. : 0.010 | Avg. score, last 100 games : 4811.227
+Episode T= 129 / 500 | Score : 23988.14 | Agent eps. : 0.010 | Avg. score, last 100 games : 5004.933
+Episode T= 130 / 500 | Score : 35259.59 | Agent eps. : 0.010 | Avg. score, last 100 games : 5307.480
+Current score: 5307.480 < 5440.989
+Restoring prev. model...
+Episode T= 131 / 500 | Score : -94444.08 | Agent eps. : 0.010 | Avg. score, last 100 games : 4343.351
+Episode T= 132 / 500 | Score : 46477.53 | Agent eps. : 0.010 | Avg. score, last 100 games : 4801.331
+Episode T= 133 / 500 | Score : 48686.55 | Agent eps. : 0.010 | Avg. score, last 100 games : 5273.215
+Episode T= 134 / 500 | Score : -94328.89 | Agent eps. : 0.010 | Avg. score, last 100 games : 4213.619
+Episode T= 135 / 500 | Score : 27747.13 | Agent eps. : 0.010 | Avg. score, last 100 games : 4461.340
+Episode T= 136 / 500 | Score : 55688.42 | Agent eps. : 0.010 | Avg. score, last 100 games : 4994.955
+Episode T= 137 / 500 | Score : 23856.81 | Agent eps. : 0.010 | Avg. score, last 100 games : 5189.407
+Episode T= 138 / 500 | Score : 40312.19 | Agent eps. : 0.010 | Avg. score, last 100 games : 5547.803
+Episode T= 139 / 500 | Score : -94454.14 | Agent eps. : 0.010 | Avg. score, last 100 games : 4537.682
+Episode T= 140 / 500 | Score : 29559.69 | Agent eps. : 0.010 | Avg. score, last 100 games : 4787.902
+Current score: 4787.902 < 5440.989
+Restoring prev. model...
+Episode T= 141 / 500 | Score : 40762.37 | Agent eps. : 0.010 | Avg. score, last 100 games : 5829.136
+Episode T= 142 / 500 | Score : 29177.51 | Agent eps. : 0.010 | Avg. score, last 100 games : 6082.923
+Episode T= 143 / 500 | Score : -93805.45 | Agent eps. : 0.010 | Avg. score, last 100 games : 5008.855
+Episode T= 144 / 500 | Score : 13890.15 | Agent eps. : 0.010 | Avg. score, last 100 games : 5103.336
+Episode T= 145 / 500 | Score : 19031.42 | Agent eps. : 0.010 | Avg. score, last 100 games : 5249.948
+Episode T= 146 / 500 | Score : 57472.52 | Agent eps. : 0.010 | Avg. score, last 100 games : 5793.933
+Episode T= 147 / 500 | Score : 39861.00 | Agent eps. : 0.010 | Avg. score, last 100 games : 6145.140
+Episode T= 148 / 500 | Score : -92276.72 | Agent eps. : 0.010 | Avg. score, last 100 games : 5140.835
+Episode T= 149 / 500 | Score : -94844.59 | Agent eps. : 0.010 | Avg. score, last 100 games : 4130.881
+Episode T= 150 / 500 | Score : 36460.41 | Agent eps. : 0.010 | Avg. score, last 100 games : 4454.177
+Current score: 4454.177 < 5440.989
+Restoring prev. model...
+Episode T= 151 / 500 | Score : 29398.56 | Agent eps. : 0.010 | Avg. score, last 100 games : 5704.259
+Episode T= 152 / 500 | Score : -93295.45 | Agent eps. : 0.010 | Avg. score, last 100 games : 4628.175
+Episode T= 153 / 500 | Score : 28711.96 | Agent eps. : 0.010 | Avg. score, last 100 games : 4887.141
+Episode T= 154 / 500 | Score : 33057.52 | Agent eps. : 0.010 | Avg. score, last 100 games : 5186.826
+Episode T= 155 / 500 | Score : 43393.05 | Agent eps. : 0.010 | Avg. score, last 100 games : 5588.997
+Episode T= 156 / 500 | Score : 44095.12 | Agent eps. : 0.010 | Avg. score, last 100 games : 5990.102
+Episode T= 157 / 500 | Score : 46695.56 | Agent eps. : 0.010 | Avg. score, last 100 games : 6409.746
+Episode T= 158 / 500 | Score : 42358.55 | Agent eps. : 0.010 | Avg. score, last 100 games : 6776.570
+Episode T= 159 / 500 | Score : 23677.68 | Agent eps. : 0.010 | Avg. score, last 100 games : 6947.289
+Episode T= 160 / 500 | Score : 36258.08 | Agent eps. : 0.010 | Avg. score, last 100 games : 7240.397
+Saving model...
+Episode T= 161 / 500 | Score : 45974.20 | Agent eps. : 0.010 | Avg. score, last 100 games : 8626.673
+Episode T= 162 / 500 | Score : 59408.01 | Agent eps. : 0.010 | Avg. score, last 100 games : 10105.594
+Episode T= 163 / 500 | Score : -93157.28 | Agent eps. : 0.010 | Avg. score, last 100 games : 10033.709
+Episode T= 164 / 500 | Score : 12462.58 | Agent eps. : 0.010 | Avg. score, last 100 games : 11083.729
+Episode T= 165 / 500 | Score : 45489.33 | Agent eps. : 0.010 | Avg. score, last 100 games : 12424.966
+Episode T= 166 / 500 | Score : 7863.84 | Agent eps. : 0.010 | Avg. score, last 100 games : 13408.338
+Episode T= 167 / 500 | Score : -92567.84 | Agent eps. : 0.010 | Avg. score, last 100 games : 13234.474
+Episode T= 168 / 500 | Score : 55427.16 | Agent eps. : 0.010 | Avg. score, last 100 games : 14694.011
+Episode T= 169 / 500 | Score : 48360.02 | Agent eps. : 0.010 | Avg. score, last 100 games : 16047.503
+Episode T= 170 / 500 | Score : -91755.33 | Agent eps. : 0.010 | Avg. score, last 100 games : 16069.532
+Saving model...
+Episode T= 171 / 500 | Score : 42453.73 | Agent eps. : 0.010 | Avg. score, last 100 games : 17440.151
+Episode T= 172 / 500 | Score : 33478.40 | Agent eps. : 0.010 | Avg. score, last 100 games : 18087.160
+Episode T= 173 / 500 | Score : 43674.69 | Agent eps. : 0.010 | Avg. score, last 100 games : 18166.394
+Episode T= 174 / 500 | Score : 45318.76 | Agent eps. : 0.010 | Avg. score, last 100 games : 17947.175
+Episode T= 175 / 500 | Score : 38300.90 | Agent eps. : 0.010 | Avg. score, last 100 games : 17854.325
+Episode T= 176 / 500 | Score : 57664.27 | Agent eps. : 0.010 | Avg. score, last 100 games : 18259.397
+Episode T= 177 / 500 | Score : 22467.00 | Agent eps. : 0.010 | Avg. score, last 100 games : 18353.596
+Episode T= 178 / 500 | Score : -92366.91 | Agent eps. : 0.010 | Avg. score, last 100 games : 16965.804
+Episode T= 179 / 500 | Score : 20857.01 | Agent eps. : 0.010 | Avg. score, last 100 games : 17125.780
+Episode T= 180 / 500 | Score : 41648.57 | Agent eps. : 0.010 | Avg. score, last 100 games : 17178.531
+Saving model...
+Episode T= 181 / 500 | Score : 50894.90 | Agent eps. : 0.010 | Avg. score, last 100 games : 17585.985
+Episode T= 182 / 500 | Score : 47352.63 | Agent eps. : 0.010 | Avg. score, last 100 games : 17615.392
+Episode T= 183 / 500 | Score : 37489.38 | Agent eps. : 0.010 | Avg. score, last 100 games : 17593.488
+Episode T= 184 / 500 | Score : -94548.87 | Agent eps. : 0.010 | Avg. score, last 100 games : 16550.057
+Episode T= 185 / 500 | Score : 44177.69 | Agent eps. : 0.010 | Avg. score, last 100 games : 16740.901
+Episode T= 186 / 500 | Score : 27060.30 | Agent eps. : 0.010 | Avg. score, last 100 games : 17910.570
+Episode T= 187 / 500 | Score : 25435.15 | Agent eps. : 0.010 | Avg. score, last 100 games : 19098.689
+Episode T= 188 / 500 | Score : 55874.57 | Agent eps. : 0.010 | Avg. score, last 100 games : 19243.753
+Episode T= 189 / 500 | Score : 41889.48 | Agent eps. : 0.010 | Avg. score, last 100 games : 19159.646
+Episode T= 190 / 500 | Score : 56294.74 | Agent eps. : 0.010 | Avg. score, last 100 games : 19380.740
+Saving model...
+Episode T= 191 / 500 | Score : -92111.53 | Agent eps. : 0.010 | Avg. score, last 100 games : 18131.183
+Episode T= 192 / 500 | Score : -92468.54 | Agent eps. : 0.010 | Avg. score, last 100 games : 16925.130
+Episode T= 193 / 500 | Score : 60674.95 | Agent eps. : 0.010 | Avg. score, last 100 games : 18438.509
+Episode T= 194 / 500 | Score : 13083.59 | Agent eps. : 0.010 | Avg. score, last 100 games : 18242.565
+Episode T= 195 / 500 | Score : 12966.50 | Agent eps. : 0.010 | Avg. score, last 100 games : 18048.924
+Episode T= 196 / 500 | Score : 35550.42 | Agent eps. : 0.010 | Avg. score, last 100 games : 17941.678
+Episode T= 197 / 500 | Score : -94643.70 | Agent eps. : 0.010 | Avg. score, last 100 games : 16844.735
+Episode T= 198 / 500 | Score : 37541.48 | Agent eps. : 0.010 | Avg. score, last 100 games : 16893.513
+Episode T= 199 / 500 | Score : 65201.90 | Agent eps. : 0.010 | Avg. score, last 100 games : 18311.361
+Episode T= 200 / 500 | Score : 37762.06 | Agent eps. : 0.010 | Avg. score, last 100 games : 19624.844
+Saving model...
+Episode T= 201 / 500 | Score : 32837.96 | Agent eps. : 0.010 | Avg. score, last 100 games : 19783.260
+Episode T= 202 / 500 | Score : 42799.95 | Agent eps. : 0.010 | Avg. score, last 100 games : 19919.720
+Episode T= 203 / 500 | Score : -94058.04 | Agent eps. : 0.010 | Avg. score, last 100 games : 18503.395
+Episode T= 204 / 500 | Score : 35273.12 | Agent eps. : 0.010 | Avg. score, last 100 games : 18491.081
+Episode T= 205 / 500 | Score : 5451.96 | Agent eps. : 0.010 | Avg. score, last 100 games : 18255.110
+Episode T= 206 / 500 | Score : 35475.73 | Agent eps. : 0.010 | Avg. score, last 100 games : 18244.121
+Episode T= 207 / 500 | Score : 23923.24 | Agent eps. : 0.010 | Avg. score, last 100 games : 18098.634
+Episode T= 208 / 500 | Score : 17561.49 | Agent eps. : 0.010 | Avg. score, last 100 games : 17862.481
+Episode T= 209 / 500 | Score : 45978.17 | Agent eps. : 0.010 | Avg. score, last 100 games : 17895.409
+Episode T= 210 / 500 | Score : 43722.23 | Agent eps. : 0.010 | Avg. score, last 100 games : 17903.205
+Current score: 17903.205 < 19624.844
+Restoring prev. model...
+Episode T= 211 / 500 | Score : -93957.17 | Agent eps. : 0.010 | Avg. score, last 100 games : 18515.309
+Episode T= 212 / 500 | Score : 51597.14 | Agent eps. : 0.010 | Avg. score, last 100 games : 18739.740
+Episode T= 213 / 500 | Score : 42474.68 | Agent eps. : 0.010 | Avg. score, last 100 games : 18688.743
+Episode T= 214 / 500 | Score : -46801.51 | Agent eps. : 0.010 | Avg. score, last 100 games : 17855.683
+Episode T= 215 / 500 | Score : -7128.99 | Agent eps. : 0.010 | Avg. score, last 100 games : 17493.902
+Episode T= 216 / 500 | Score : 27981.24 | Agent eps. : 0.010 | Avg. score, last 100 games : 17407.968
+Episode T= 217 / 500 | Score : -93194.93 | Agent eps. : 0.010 | Avg. score, last 100 games : 16091.299
+Episode T= 218 / 500 | Score : 30834.03 | Agent eps. : 0.010 | Avg. score, last 100 games : 15987.871
+Episode T= 219 / 500 | Score : 42659.26 | Agent eps. : 0.010 | Avg. score, last 100 games : 15987.611
+Episode T= 220 / 500 | Score : 46591.10 | Agent eps. : 0.010 | Avg. score, last 100 games : 16024.095
+Current score: 16024.095 < 19624.844
+Restoring prev. model...
+Episode T= 221 / 500 | Score : 48753.08 | Agent eps. : 0.010 | Avg. score, last 100 games : 19942.411
+Episode T= 222 / 500 | Score : 53384.74 | Agent eps. : 0.010 | Avg. score, last 100 games : 20184.719
+Episode T= 223 / 500 | Score : 30564.02 | Agent eps. : 0.010 | Avg. score, last 100 games : 20014.615
+Episode T= 224 / 500 | Score : 49280.32 | Agent eps. : 0.010 | Avg. score, last 100 games : 20142.373
+Episode T= 225 / 500 | Score : -25532.20 | Agent eps. : 0.010 | Avg. score, last 100 games : 19596.560
+Episode T= 226 / 500 | Score : 47553.40 | Agent eps. : 0.010 | Avg. score, last 100 games : 19706.348
+Episode T= 227 / 500 | Score : 45504.30 | Agent eps. : 0.010 | Avg. score, last 100 games : 19776.671
+Episode T= 228 / 500 | Score : 23904.10 | Agent eps. : 0.010 | Avg. score, last 100 games : 19603.944
+Episode T= 229 / 500 | Score : -94057.56 | Agent eps. : 0.010 | Avg. score, last 100 games : 18236.515
+Episode T= 230 / 500 | Score : 54466.87 | Agent eps. : 0.010 | Avg. score, last 100 games : 18351.758
+Current score: 18351.758 < 19624.844
+Restoring prev. model...
+Episode T= 231 / 500 | Score : -92493.82 | Agent eps. : 0.010 | Avg. score, last 100 games : 18529.942
+Episode T= 232 / 500 | Score : 48579.79 | Agent eps. : 0.010 | Avg. score, last 100 games : 18724.200
+Episode T= 233 / 500 | Score : 52350.36 | Agent eps. : 0.010 | Avg. score, last 100 games : 18771.959
+Episode T= 234 / 500 | Score : 12784.47 | Agent eps. : 0.010 | Avg. score, last 100 games : 18534.759
+Episode T= 235 / 500 | Score : -6214.84 | Agent eps. : 0.010 | Avg. score, last 100 games : 18182.120
+Episode T= 236 / 500 | Score : 34667.22 | Agent eps. : 0.010 | Avg. score, last 100 games : 18163.046
+Episode T= 237 / 500 | Score : -92008.19 | Agent eps. : 0.010 | Avg. score, last 100 games : 16858.244
+Episode T= 238 / 500 | Score : 50402.33 | Agent eps. : 0.010 | Avg. score, last 100 games : 16950.500
+Episode T= 239 / 500 | Score : 20282.67 | Agent eps. : 0.010 | Avg. score, last 100 games : 16726.473
+Episode T= 240 / 500 | Score : 38158.61 | Agent eps. : 0.010 | Avg. score, last 100 games : 16678.633
+Current score: 16678.633 < 19624.844
+Restoring prev. model...
+Episode T= 241 / 500 | Score : -91567.99 | Agent eps. : 0.010 | Avg. score, last 100 games : 18539.201
+Episode T= 242 / 500 | Score : -91793.15 | Agent eps. : 0.010 | Avg. score, last 100 games : 17329.729
+Episode T= 243 / 500 | Score : 13573.90 | Agent eps. : 0.010 | Avg. score, last 100 games : 16989.724
+Episode T= 244 / 500 | Score : -92962.14 | Agent eps. : 0.010 | Avg. score, last 100 games : 15695.057
+Episode T= 245 / 500 | Score : -1460.18 | Agent eps. : 0.010 | Avg. score, last 100 games : 15389.965
+Episode T= 246 / 500 | Score : 38804.56 | Agent eps. : 0.010 | Avg. score, last 100 games : 15412.264
+Episode T= 247 / 500 | Score : -92770.15 | Agent eps. : 0.010 | Avg. score, last 100 games : 14099.843
+Episode T= 248 / 500 | Score : 50457.00 | Agent eps. : 0.010 | Avg. score, last 100 games : 14192.645
+Episode T= 249 / 500 | Score : -92092.54 | Agent eps. : 0.010 | Avg. score, last 100 games : 12844.867
+Episode T= 250 / 500 | Score : -93258.59 | Agent eps. : 0.010 | Avg. score, last 100 games : 11482.854
+Current score: 11482.854 < 19624.844
+Restoring prev. model...
+Episode T= 251 / 500 | Score : 12570.31 | Agent eps. : 0.010 | Avg. score, last 100 games : 19580.584
+Episode T= 252 / 500 | Score : 45309.37 | Agent eps. : 0.010 | Avg. score, last 100 games : 19742.137
+Episode T= 253 / 500 | Score : 57804.86 | Agent eps. : 0.010 | Avg. score, last 100 games : 19844.442
+Episode T= 254 / 500 | Score : 20977.56 | Agent eps. : 0.010 | Avg. score, last 100 games : 19689.172
+Episode T= 255 / 500 | Score : -91045.56 | Agent eps. : 0.010 | Avg. score, last 100 games : 18488.226
+Episode T= 256 / 500 | Score : 37991.45 | Agent eps. : 0.010 | Avg. score, last 100 games : 18502.394
+Episode T= 257 / 500 | Score : 33278.95 | Agent eps. : 0.010 | Avg. score, last 100 games : 18450.464
+Episode T= 258 / 500 | Score : 38281.04 | Agent eps. : 0.010 | Avg. score, last 100 games : 18421.506
+Episode T= 259 / 500 | Score : 25250.27 | Agent eps. : 0.010 | Avg. score, last 100 games : 18247.156
+Episode T= 260 / 500 | Score : -93545.00 | Agent eps. : 0.010 | Avg. score, last 100 games : 16882.279
+Current score: 16882.279 < 19624.844
+Restoring prev. model...
+Episode T= 261 / 500 | Score : 16021.72 | Agent eps. : 0.010 | Avg. score, last 100 games : 19615.098
+Episode T= 262 / 500 | Score : 13492.29 | Agent eps. : 0.010 | Avg. score, last 100 games : 19458.481
+Episode T= 263 / 500 | Score : -93857.86 | Agent eps. : 0.010 | Avg. score, last 100 games : 18044.158
+Episode T= 264 / 500 | Score : -91200.47 | Agent eps. : 0.010 | Avg. score, last 100 games : 16767.108
+Episode T= 265 / 500 | Score : 49358.19 | Agent eps. : 0.010 | Avg. score, last 100 games : 16970.199
+Episode T= 266 / 500 | Score : -93655.10 | Agent eps. : 0.010 | Avg. score, last 100 games : 15667.902
+Episode T= 267 / 500 | Score : 20860.70 | Agent eps. : 0.010 | Avg. score, last 100 games : 15491.789
+Episode T= 268 / 500 | Score : 56677.21 | Agent eps. : 0.010 | Avg. score, last 100 games : 15646.794
+Episode T= 269 / 500 | Score : 16753.51 | Agent eps. : 0.010 | Avg. score, last 100 games : 15387.476
+Episode T= 270 / 500 | Score : 6645.45 | Agent eps. : 0.010 | Avg. score, last 100 games : 15024.503
+Current score: 15024.503 < 19624.844
+Restoring prev. model...
+Episode T= 271 / 500 | Score : 39042.67 | Agent eps. : 0.010 | Avg. score, last 100 games : 19845.307
+Episode T= 272 / 500 | Score : 35059.31 | Agent eps. : 0.010 | Avg. score, last 100 games : 19904.360
+Episode T= 273 / 500 | Score : -94149.21 | Agent eps. : 0.010 | Avg. score, last 100 games : 18487.124
+Episode T= 274 / 500 | Score : 48470.61 | Agent eps. : 0.010 | Avg. score, last 100 games : 18606.785
+Episode T= 275 / 500 | Score : 8879.66 | Agent eps. : 0.010 | Avg. score, last 100 games : 18405.091
+Episode T= 276 / 500 | Score : 43594.07 | Agent eps. : 0.010 | Avg. score, last 100 games : 18475.285
+Episode T= 277 / 500 | Score : 45791.20 | Agent eps. : 0.010 | Avg. score, last 100 games : 18548.478
+Episode T= 278 / 500 | Score : 31244.53 | Agent eps. : 0.010 | Avg. score, last 100 games : 18449.155
+Episode T= 279 / 500 | Score : 36641.39 | Agent eps. : 0.010 | Avg. score, last 100 games : 18388.716
+Episode T= 280 / 500 | Score : -91970.50 | Agent eps. : 0.010 | Avg. score, last 100 games : 17039.584
+Current score: 17039.584 < 19624.844
+Restoring prev. model...
+Episode T= 281 / 500 | Score : 29032.73 | Agent eps. : 0.010 | Avg. score, last 100 games : 19745.208
+Episode T= 282 / 500 | Score : -90992.67 | Agent eps. : 0.010 | Avg. score, last 100 games : 18543.741
+Episode T= 283 / 500 | Score : 37353.35 | Agent eps. : 0.010 | Avg. score, last 100 games : 18441.530
+Episode T= 284 / 500 | Score : -95036.65 | Agent eps. : 0.010 | Avg. score, last 100 games : 17126.119
+Episode T= 285 / 500 | Score : 44399.86 | Agent eps. : 0.010 | Avg. score, last 100 games : 17279.626
+Episode T= 286 / 500 | Score : 60952.90 | Agent eps. : 0.010 | Avg. score, last 100 games : 17523.409
+Episode T= 287 / 500 | Score : 36753.65 | Agent eps. : 0.010 | Avg. score, last 100 games : 17506.226
+Episode T= 288 / 500 | Score : 45914.44 | Agent eps. : 0.010 | Avg. score, last 100 games : 17553.603
+Episode T= 289 / 500 | Score : 37962.11 | Agent eps. : 0.010 | Avg. score, last 100 games : 17506.371
+Episode T= 290 / 500 | Score : 56167.48 | Agent eps. : 0.010 | Avg. score, last 100 games : 17638.619
+Current score: 17638.619 < 19624.844
+Restoring prev. model...
+Episode T= 291 / 500 | Score : -91985.48 | Agent eps. : 0.010 | Avg. score, last 100 games : 18535.026
+Episode T= 292 / 500 | Score : 27132.05 | Agent eps. : 0.010 | Avg. score, last 100 games : 18514.806
+Episode T= 293 / 500 | Score : 15354.24 | Agent eps. : 0.010 | Avg. score, last 100 games : 18192.604
+Episode T= 294 / 500 | Score : 42570.01 | Agent eps. : 0.010 | Avg. score, last 100 games : 18253.259
+Episode T= 295 / 500 | Score : -3304.41 | Agent eps. : 0.010 | Avg. score, last 100 games : 17929.724
+Episode T= 296 / 500 | Score : -85678.22 | Agent eps. : 0.010 | Avg. score, last 100 games : 16707.196
+Episode T= 297 / 500 | Score : 2076.50 | Agent eps. : 0.010 | Avg. score, last 100 games : 16343.241
+Episode T= 298 / 500 | Score : 54590.37 | Agent eps. : 0.010 | Avg. score, last 100 games : 16477.377
+Episode T= 299 / 500 | Score : -92869.74 | Agent eps. : 0.010 | Avg. score, last 100 games : 15121.827
+Episode T= 300 / 500 | Score : 4218.56 | Agent eps. : 0.010 | Avg. score, last 100 games : 14734.586
+Current score: 14734.586 < 19624.844
+Restoring prev. model...
+Episode T= 301 / 500 | Score : 37160.73 | Agent eps. : 0.010 | Avg. score, last 100 games : 19826.488
+Episode T= 302 / 500 | Score : 32382.29 | Agent eps. : 0.010 | Avg. score, last 100 games : 19858.771
+Episode T= 303 / 500 | Score : 30062.30 | Agent eps. : 0.010 | Avg. score, last 100 games : 19683.649
+Episode T= 304 / 500 | Score : -93654.54 | Agent eps. : 0.010 | Avg. score, last 100 games : 18382.059
+Episode T= 305 / 500 | Score : 36864.82 | Agent eps. : 0.010 | Avg. score, last 100 games : 18460.216
+Episode T= 306 / 500 | Score : 41144.04 | Agent eps. : 0.010 | Avg. score, last 100 games : 18505.911
+Episode T= 307 / 500 | Score : -91636.23 | Agent eps. : 0.010 | Avg. score, last 100 games : 17204.829
+Episode T= 308 / 500 | Score : 53167.68 | Agent eps. : 0.010 | Avg. score, last 100 games : 17324.738
+Episode T= 309 / 500 | Score : 53780.72 | Agent eps. : 0.010 | Avg. score, last 100 games : 17435.692
+Episode T= 310 / 500 | Score : -27852.60 | Agent eps. : 0.010 | Avg. score, last 100 games : 16727.739
+Current score: 16727.739 < 19624.844
+Restoring prev. model...
+Episode T= 311 / 500 | Score : 3667.36 | Agent eps. : 0.010 | Avg. score, last 100 games : 19491.554
+Episode T= 312 / 500 | Score : 64399.69 | Agent eps. : 0.010 | Avg. score, last 100 games : 19844.011
+Episode T= 313 / 500 | Score : 16548.63 | Agent eps. : 0.010 | Avg. score, last 100 games : 19533.753
+Episode T= 314 / 500 | Score : 8316.90 | Agent eps. : 0.010 | Avg. score, last 100 games : 19251.877
+Episode T= 315 / 500 | Score : 38716.50 | Agent eps. : 0.010 | Avg. score, last 100 games : 19348.551
+Episode T= 316 / 500 | Score : 10759.23 | Agent eps. : 0.010 | Avg. score, last 100 games : 19090.397
+Episode T= 317 / 500 | Score : 38248.67 | Agent eps. : 0.010 | Avg. score, last 100 games : 19088.164
+Episode T= 318 / 500 | Score : 48473.89 | Agent eps. : 0.010 | Avg. score, last 100 games : 19161.135
+Episode T= 319 / 500 | Score : 45368.10 | Agent eps. : 0.010 | Avg. score, last 100 games : 19187.963
+Episode T= 320 / 500 | Score : 39498.04 | Agent eps. : 0.010 | Avg. score, last 100 games : 19153.517
+Current score: 19153.517 < 19624.844
+Restoring prev. model...
+Episode T= 321 / 500 | Score : -94152.55 | Agent eps. : 0.010 | Avg. score, last 100 games : 18513.355
+Episode T= 322 / 500 | Score : 41431.96 | Agent eps. : 0.010 | Avg. score, last 100 games : 18636.135
+Episode T= 323 / 500 | Score : 65686.07 | Agent eps. : 0.010 | Avg. score, last 100 games : 18817.251
+Episode T= 324 / 500 | Score : 38759.79 | Agent eps. : 0.010 | Avg. score, last 100 games : 18839.804
+Episode T= 325 / 500 | Score : 39140.16 | Agent eps. : 0.010 | Avg. score, last 100 games : 18940.715
+Episode T= 326 / 500 | Score : 49018.51 | Agent eps. : 0.010 | Avg. score, last 100 games : 19065.154
+Episode T= 327 / 500 | Score : 17183.62 | Agent eps. : 0.010 | Avg. score, last 100 games : 18852.270
+Episode T= 328 / 500 | Score : -94254.23 | Agent eps. : 0.010 | Avg. score, last 100 games : 17497.960
+Episode T= 329 / 500 | Score : 38470.72 | Agent eps. : 0.010 | Avg. score, last 100 games : 17455.814
+Episode T= 330 / 500 | Score : 60065.71 | Agent eps. : 0.010 | Avg. score, last 100 games : 17627.044
+Current score: 17627.044 < 19624.844
+Restoring prev. model...
+Episode T= 331 / 500 | Score : 16899.01 | Agent eps. : 0.010 | Avg. score, last 100 games : 19623.871
+Episode T= 332 / 500 | Score : 18143.44 | Agent eps. : 0.010 | Avg. score, last 100 games : 19513.765
+Episode T= 333 / 500 | Score : 45491.81 | Agent eps. : 0.010 | Avg. score, last 100 games : 19492.939
+Episode T= 334 / 500 | Score : 54267.36 | Agent eps. : 0.010 | Avg. score, last 100 games : 19670.567
+Episode T= 335 / 500 | Score : -91481.96 | Agent eps. : 0.010 | Avg. score, last 100 games : 18465.257
+Episode T= 336 / 500 | Score : 48690.20 | Agent eps. : 0.010 | Avg. score, last 100 games : 18586.413
+Episode T= 337 / 500 | Score : 4538.88 | Agent eps. : 0.010 | Avg. score, last 100 games : 18247.082
+Episode T= 338 / 500 | Score : 49705.48 | Agent eps. : 0.010 | Avg. score, last 100 games : 18332.369
+Episode T= 339 / 500 | Score : 61978.46 | Agent eps. : 0.010 | Avg. score, last 100 games : 18525.300
+Episode T= 340 / 500 | Score : 41552.08 | Agent eps. : 0.010 | Avg. score, last 100 games : 18511.394
+Current score: 18511.394 < 19624.844
+Restoring prev. model...
+Episode T= 341 / 500 | Score : -94030.03 | Agent eps. : 0.010 | Avg. score, last 100 games : 18514.580
+Episode T= 342 / 500 | Score : 46354.33 | Agent eps. : 0.010 | Avg. score, last 100 games : 18686.584
+Episode T= 343 / 500 | Score : -92879.05 | Agent eps. : 0.010 | Avg. score, last 100 games : 17282.049
+Episode T= 344 / 500 | Score : -91961.49 | Agent eps. : 0.010 | Avg. score, last 100 games : 15997.389
+Episode T= 345 / 500 | Score : 28951.90 | Agent eps. : 0.010 | Avg. score, last 100 games : 15996.417
+Episode T= 346 / 500 | Score : 45500.90 | Agent eps. : 0.010 | Avg. score, last 100 games : 16085.680
+Episode T= 347 / 500 | Score : 23594.40 | Agent eps. : 0.010 | Avg. score, last 100 games : 15936.904
+Episode T= 348 / 500 | Score : 40600.43 | Agent eps. : 0.010 | Avg. score, last 100 games : 15931.140
+Episode T= 349 / 500 | Score : -92806.55 | Agent eps. : 0.010 | Avg. score, last 100 games : 14576.222
+Episode T= 350 / 500 | Score : -16843.18 | Agent eps. : 0.010 | Avg. score, last 100 games : 13978.364
+Current score: 13978.364 < 19624.844
+Restoring prev. model...
+Episode T= 351 / 500 | Score : 45841.96 | Agent eps. : 0.010 | Avg. score, last 100 games : 19913.300
+Episode T= 352 / 500 | Score : 28930.69 | Agent eps. : 0.010 | Avg. score, last 100 games : 19911.067
+Episode T= 353 / 500 | Score : -94933.68 | Agent eps. : 0.010 | Avg. score, last 100 games : 18485.986
+Episode T= 354 / 500 | Score : 63684.15 | Agent eps. : 0.010 | Avg. score, last 100 games : 18757.782
+Episode T= 355 / 500 | Score : -91833.53 | Agent eps. : 0.010 | Avg. score, last 100 games : 17548.956
+Episode T= 356 / 500 | Score : -93546.25 | Agent eps. : 0.010 | Avg. score, last 100 games : 16247.748
+Episode T= 357 / 500 | Score : -91402.25 | Agent eps. : 0.010 | Avg. score, last 100 games : 14949.005
+Episode T= 358 / 500 | Score : 3163.90 | Agent eps. : 0.010 | Avg. score, last 100 games : 14568.877
+Episode T= 359 / 500 | Score : -1231.00 | Agent eps. : 0.010 | Avg. score, last 100 games : 14129.713
+Episode T= 360 / 500 | Score : 43366.42 | Agent eps. : 0.010 | Avg. score, last 100 games : 14133.951
+Current score: 14133.951 < 19624.844
+Restoring prev. model...
+Episode T= 361 / 500 | Score : 29048.46 | Agent eps. : 0.010 | Avg. score, last 100 games : 19745.365
+Episode T= 362 / 500 | Score : 55870.10 | Agent eps. : 0.010 | Avg. score, last 100 games : 20012.526
+Episode T= 363 / 500 | Score : 18446.17 | Agent eps. : 0.010 | Avg. score, last 100 games : 19721.243
+Episode T= 364 / 500 | Score : -92390.46 | Agent eps. : 0.010 | Avg. score, last 100 games : 18432.294
+Episode T= 365 / 500 | Score : 30845.64 | Agent eps. : 0.010 | Avg. score, last 100 games : 18450.259
+Episode T= 366 / 500 | Score : 20416.11 | Agent eps. : 0.010 | Avg. score, last 100 games : 18288.674
+Episode T= 367 / 500 | Score : 43198.33 | Agent eps. : 0.010 | Avg. score, last 100 games : 18335.938
+Episode T= 368 / 500 | Score : 53076.72 | Agent eps. : 0.010 | Avg. score, last 100 games : 18454.937
+Episode T= 369 / 500 | Score : 2856.47 | Agent eps. : 0.010 | Avg. score, last 100 games : 18056.649
+Episode T= 370 / 500 | Score : 44065.47 | Agent eps. : 0.010 | Avg. score, last 100 games : 18067.877
+Current score: 18067.877 < 19624.844
+Restoring prev. model...
+Episode T= 371 / 500 | Score : 37004.99 | Agent eps. : 0.010 | Avg. score, last 100 games : 19824.930
+Episode T= 372 / 500 | Score : 16773.85 | Agent eps. : 0.010 | Avg. score, last 100 games : 19701.129
+Episode T= 373 / 500 | Score : 48941.86 | Agent eps. : 0.010 | Avg. score, last 100 games : 19714.803
+Episode T= 374 / 500 | Score : 25772.54 | Agent eps. : 0.010 | Avg. score, last 100 games : 19607.484
+Episode T= 375 / 500 | Score : -93364.08 | Agent eps. : 0.010 | Avg. score, last 100 games : 18383.352
+Episode T= 376 / 500 | Score : 47159.98 | Agent eps. : 0.010 | Avg. score, last 100 games : 18489.206
+Episode T= 377 / 500 | Score : 38036.90 | Agent eps. : 0.010 | Avg. score, last 100 games : 18484.855
+Episode T= 378 / 500 | Score : 58895.84 | Agent eps. : 0.010 | Avg. score, last 100 games : 18662.045
+Episode T= 379 / 500 | Score : 40164.75 | Agent eps. : 0.010 | Avg. score, last 100 games : 18636.840
+Episode T= 380 / 500 | Score : 41243.80 | Agent eps. : 0.010 | Avg. score, last 100 games : 18619.851
+Current score: 18619.851 < 19624.844
+Restoring prev. model...
+Episode T= 381 / 500 | Score : 25367.03 | Agent eps. : 0.010 | Avg. score, last 100 games : 19708.551
+Episode T= 382 / 500 | Score : 50345.73 | Agent eps. : 0.010 | Avg. score, last 100 games : 19920.468
+Episode T= 383 / 500 | Score : 18855.18 | Agent eps. : 0.010 | Avg. score, last 100 games : 19633.276
+Episode T= 384 / 500 | Score : -92763.91 | Agent eps. : 0.010 | Avg. score, last 100 games : 18340.591
+Episode T= 385 / 500 | Score : -92453.39 | Agent eps. : 0.010 | Avg. score, last 100 games : 17125.567
+Episode T= 386 / 500 | Score : 31240.57 | Agent eps. : 0.010 | Avg. score, last 100 games : 17072.226
+Episode T= 387 / 500 | Score : 19865.82 | Agent eps. : 0.010 | Avg. score, last 100 games : 16886.165
+Episode T= 388 / 500 | Score : 54962.21 | Agent eps. : 0.010 | Avg. score, last 100 games : 17024.019
+Episode T= 389 / 500 | Score : 41851.55 | Agent eps. : 0.010 | Avg. score, last 100 games : 17015.681
+Episode T= 390 / 500 | Score : 19169.10 | Agent eps. : 0.010 | Avg. score, last 100 games : 16777.946
+Current score: 16777.946 < 19624.844
+Restoring prev. model...
+Episode T= 391 / 500 | Score : 52062.82 | Agent eps. : 0.010 | Avg. score, last 100 games : 19975.509
+Episode T= 392 / 500 | Score : -92273.55 | Agent eps. : 0.010 | Avg. score, last 100 games : 18761.233
+Episode T= 393 / 500 | Score : 31372.31 | Agent eps. : 0.010 | Avg. score, last 100 games : 18599.212
+Episode T= 394 / 500 | Score : 24979.80 | Agent eps. : 0.010 | Avg. score, last 100 games : 18483.965
+Episode T= 395 / 500 | Score : 57387.84 | Agent eps. : 0.010 | Avg. score, last 100 games : 18767.353
+Episode T= 396 / 500 | Score : 17151.79 | Agent eps. : 0.010 | Avg. score, last 100 games : 18573.124
+Episode T= 397 / 500 | Score : 40668.58 | Agent eps. : 0.010 | Avg. score, last 100 games : 18595.090
+Episode T= 398 / 500 | Score : 45606.29 | Agent eps. : 0.010 | Avg. score, last 100 games : 18639.385
+Episode T= 399 / 500 | Score : 49455.47 | Agent eps. : 0.010 | Avg. score, last 100 games : 18707.087
+Episode T= 400 / 500 | Score : 41982.53 | Agent eps. : 0.010 | Avg. score, last 100 games : 18697.486
+Current score: 18697.486 < 19624.844
+Restoring prev. model...
+Episode T= 401 / 500 | Score : 25176.71 | Agent eps. : 0.010 | Avg. score, last 100 games : 19706.648
+Episode T= 402 / 500 | Score : 42901.43 | Agent eps. : 0.010 | Avg. score, last 100 games : 19844.122
+Episode T= 403 / 500 | Score : 16340.47 | Agent eps. : 0.010 | Avg. score, last 100 games : 19531.782
+Episode T= 404 / 500 | Score : -94647.19 | Agent eps. : 0.010 | Avg. score, last 100 games : 18220.265
+Episode T= 405 / 500 | Score : 56630.56 | Agent eps. : 0.010 | Avg. score, last 100 games : 18496.080
+Episode T= 406 / 500 | Score : 42650.66 | Agent eps. : 0.010 | Avg. score, last 100 games : 18556.841
+Episode T= 407 / 500 | Score : 15171.43 | Agent eps. : 0.010 | Avg. score, last 100 games : 18323.835
+Episode T= 408 / 500 | Score : 24056.98 | Agent eps. : 0.010 | Avg. score, last 100 games : 18152.637
+Episode T= 409 / 500 | Score : 39165.33 | Agent eps. : 0.010 | Avg. score, last 100 games : 18117.437
+Episode T= 410 / 500 | Score : 46719.67 | Agent eps. : 0.010 | Avg. score, last 100 games : 18155.207
+Current score: 18155.207 < 19624.844
+Restoring prev. model...
+Episode T= 411 / 500 | Score : 49473.89 | Agent eps. : 0.010 | Avg. score, last 100 games : 19949.619
+Episode T= 412 / 500 | Score : 55615.72 | Agent eps. : 0.010 | Avg. score, last 100 games : 20214.237
+Episode T= 413 / 500 | Score : 40994.07 | Agent eps. : 0.010 | Avg. score, last 100 games : 20148.433
+Episode T= 414 / 500 | Score : 57340.18 | Agent eps. : 0.010 | Avg. score, last 100 games : 20356.790
+Episode T= 415 / 500 | Score : 26983.24 | Agent eps. : 0.010 | Avg. score, last 100 games : 20336.131
+Episode T= 416 / 500 | Score : 48365.44 | Agent eps. : 0.010 | Avg. score, last 100 games : 20454.040
+Episode T= 417 / 500 | Score : 29094.08 | Agent eps. : 0.010 | Avg. score, last 100 games : 20360.260
+Episode T= 418 / 500 | Score : -2835.79 | Agent eps. : 0.010 | Avg. score, last 100 games : 19920.135
+Episode T= 419 / 500 | Score : 20970.67 | Agent eps. : 0.010 | Avg. score, last 100 games : 19702.988
+Episode T= 420 / 500 | Score : 51839.78 | Agent eps. : 0.010 | Avg. score, last 100 games : 19791.960
+Saving model...
+Episode T= 421 / 500 | Score : 38375.53 | Agent eps. : 0.010 | Avg. score, last 100 games : 19862.703
+Episode T= 422 / 500 | Score : 12847.98 | Agent eps. : 0.010 | Avg. score, last 100 games : 19970.239
+Episode T= 423 / 500 | Score : 38368.44 | Agent eps. : 0.010 | Avg. score, last 100 games : 21267.541
+Episode T= 424 / 500 | Score : 38558.69 | Agent eps. : 0.010 | Avg. score, last 100 games : 20984.331
+Episode T= 425 / 500 | Score : 1033.51 | Agent eps. : 0.010 | Avg. score, last 100 games : 20593.003
+Episode T= 426 / 500 | Score : -92961.88 | Agent eps. : 0.010 | Avg. score, last 100 games : 19225.139
+Episode T= 427 / 500 | Score : 41552.09 | Agent eps. : 0.010 | Avg. score, last 100 games : 18999.636
+Episode T= 428 / 500 | Score : 30274.85 | Agent eps. : 0.010 | Avg. score, last 100 games : 18857.569
+Episode T= 429 / 500 | Score : 38306.58 | Agent eps. : 0.010 | Avg. score, last 100 games : 18907.788
+Episode T= 430 / 500 | Score : 23582.17 | Agent eps. : 0.010 | Avg. score, last 100 games : 19096.068
+Current score: 19096.068 < 19791.960
+Restoring prev. model...
+Episode T= 431 / 500 | Score : 37704.43 | Agent eps. : 0.010 | Avg. score, last 100 games : 19855.992
+Episode T= 432 / 500 | Score : 38714.30 | Agent eps. : 0.010 | Avg. score, last 100 games : 20222.191
+Episode T= 433 / 500 | Score : 47308.68 | Agent eps. : 0.010 | Avg. score, last 100 games : 21608.896
+Episode T= 434 / 500 | Score : 33645.14 | Agent eps. : 0.010 | Avg. score, last 100 games : 21276.550
+Episode T= 435 / 500 | Score : 49478.18 | Agent eps. : 0.010 | Avg. score, last 100 games : 21369.669
+Episode T= 436 / 500 | Score : 19313.49 | Agent eps. : 0.010 | Avg. score, last 100 games : 21124.559
+Episode T= 437 / 500 | Score : -95033.98 | Agent eps. : 0.010 | Avg. score, last 100 games : 19533.194
+Episode T= 438 / 500 | Score : 33746.09 | Agent eps. : 0.010 | Avg. score, last 100 games : 19425.841
+Episode T= 439 / 500 | Score : 49703.00 | Agent eps. : 0.010 | Avg. score, last 100 games : 19590.024
+Episode T= 440 / 500 | Score : 39082.45 | Agent eps. : 0.010 | Avg. score, last 100 games : 19933.307
+Saving model...
+Episode T= 441 / 500 | Score : 17474.20 | Agent eps. : 0.010 | Avg. score, last 100 games : 19686.150
+Episode T= 442 / 500 | Score : 58089.23 | Agent eps. : 0.010 | Avg. score, last 100 games : 19884.434
+Episode T= 443 / 500 | Score : 34560.13 | Agent eps. : 0.010 | Avg. score, last 100 games : 21146.064
+Episode T= 444 / 500 | Score : 34462.63 | Agent eps. : 0.010 | Avg. score, last 100 games : 20875.719
+Episode T= 445 / 500 | Score : -455.13 | Agent eps. : 0.010 | Avg. score, last 100 games : 20767.691
+Episode T= 446 / 500 | Score : 45687.26 | Agent eps. : 0.010 | Avg. score, last 100 games : 20832.909
+Episode T= 447 / 500 | Score : 32872.73 | Agent eps. : 0.010 | Avg. score, last 100 games : 22083.324
+Episode T= 448 / 500 | Score : 22861.69 | Agent eps. : 0.010 | Avg. score, last 100 games : 23158.379
+Episode T= 449 / 500 | Score : 38241.20 | Agent eps. : 0.010 | Avg. score, last 100 games : 23059.352
+Episode T= 450 / 500 | Score : 45974.04 | Agent eps. : 0.010 | Avg. score, last 100 games : 22996.636
+Saving model...
+Episode T= 451 / 500 | Score : -81893.40 | Agent eps. : 0.010 | Avg. score, last 100 games : 21947.266
+Episode T= 452 / 500 | Score : 30176.42 | Agent eps. : 0.010 | Avg. score, last 100 games : 22094.140
+Episode T= 453 / 500 | Score : 44179.79 | Agent eps. : 0.010 | Avg. score, last 100 games : 21852.872
+Episode T= 454 / 500 | Score : 11388.23 | Agent eps. : 0.010 | Avg. score, last 100 games : 21425.263
+Episode T= 455 / 500 | Score : 16157.48 | Agent eps. : 0.010 | Avg. score, last 100 games : 22512.408
+Episode T= 456 / 500 | Score : -92148.51 | Agent eps. : 0.010 | Avg. score, last 100 games : 20963.885
+Episode T= 457 / 500 | Score : 16854.21 | Agent eps. : 0.010 | Avg. score, last 100 games : 20703.880
+Episode T= 458 / 500 | Score : -94630.86 | Agent eps. : 0.010 | Avg. score, last 100 games : 19342.870
+Episode T= 459 / 500 | Score : 18552.28 | Agent eps. : 0.010 | Avg. score, last 100 games : 18923.607
+Episode T= 460 / 500 | Score : -94732.10 | Agent eps. : 0.010 | Avg. score, last 100 games : 17554.582
+Current score: 17554.582 < 22996.636
+Restoring prev. model...
+Episode T= 461 / 500 | Score : 48863.96 | Agent eps. : 0.010 | Avg. score, last 100 games : 23254.839
+Episode T= 462 / 500 | Score : 33961.36 | Agent eps. : 0.010 | Avg. score, last 100 games : 23439.563
+Episode T= 463 / 500 | Score : 5974.78 | Agent eps. : 0.010 | Avg. score, last 100 games : 22816.245
+Episode T= 464 / 500 | Score : 39867.17 | Agent eps. : 0.010 | Avg. score, last 100 games : 22673.425
+Episode T= 465 / 500 | Score : 60279.72 | Agent eps. : 0.010 | Avg. score, last 100 games : 24201.793
+Episode T= 466 / 500 | Score : 56067.81 | Agent eps. : 0.010 | Avg. score, last 100 games : 24135.433
+Episode T= 467 / 500 | Score : 27390.50 | Agent eps. : 0.010 | Avg. score, last 100 games : 23980.791
+Episode T= 468 / 500 | Score : 36852.58 | Agent eps. : 0.010 | Avg. score, last 100 games : 23934.615
+Episode T= 469 / 500 | Score : 31630.15 | Agent eps. : 0.010 | Avg. score, last 100 games : 23646.131
+Episode T= 470 / 500 | Score : 29081.34 | Agent eps. : 0.010 | Avg. score, last 100 games : 23515.240
+Saving model...
+Episode T= 471 / 500 | Score : -91349.80 | Agent eps. : 0.010 | Avg. score, last 100 games : 22026.024
+Episode T= 472 / 500 | Score : 66484.49 | Agent eps. : 0.010 | Avg. score, last 100 games : 22366.848
+Episode T= 473 / 500 | Score : -16807.34 | Agent eps. : 0.010 | Avg. score, last 100 games : 21999.094
+Episode T= 474 / 500 | Score : -93469.86 | Agent eps. : 0.010 | Avg. score, last 100 games : 20870.757
+Episode T= 475 / 500 | Score : 50163.25 | Agent eps. : 0.010 | Avg. score, last 100 games : 21016.344
+Episode T= 476 / 500 | Score : -91704.74 | Agent eps. : 0.010 | Avg. score, last 100 games : 19767.000
+Episode T= 477 / 500 | Score : 46578.16 | Agent eps. : 0.010 | Avg. score, last 100 games : 20002.603
+Episode T= 478 / 500 | Score : 40085.50 | Agent eps. : 0.010 | Avg. score, last 100 games : 20289.801
+Episode T= 479 / 500 | Score : 36299.89 | Agent eps. : 0.010 | Avg. score, last 100 games : 20716.940
+Episode T= 480 / 500 | Score : -17339.98 | Agent eps. : 0.010 | Avg. score, last 100 games : 20210.088
+Current score: 20210.088 < 23515.240
+Restoring prev. model...
+Episode T= 481 / 500 | Score : -23439.40 | Agent eps. : 0.010 | Avg. score, last 100 games : 22705.128
+Episode T= 482 / 500 | Score : 46725.19 | Agent eps. : 0.010 | Avg. score, last 100 games : 22848.359
+Episode T= 483 / 500 | Score : 33941.65 | Agent eps. : 0.010 | Avg. score, last 100 games : 22988.094
+Episode T= 484 / 500 | Score : 27365.11 | Agent eps. : 0.010 | Avg. score, last 100 games : 23068.107
+Episode T= 485 / 500 | Score : -2847.40 | Agent eps. : 0.010 | Avg. score, last 100 games : 22683.588
+Episode T= 486 / 500 | Score : -94839.85 | Agent eps. : 0.010 | Avg. score, last 100 games : 21402.893
+Episode T= 487 / 500 | Score : 66858.73 | Agent eps. : 0.010 | Avg. score, last 100 games : 21841.302
+Episode T= 488 / 500 | Score : 37265.57 | Agent eps. : 0.010 | Avg. score, last 100 games : 22100.300
+Episode T= 489 / 500 | Score : 41697.84 | Agent eps. : 0.010 | Avg. score, last 100 games : 22581.419
+Episode T= 490 / 500 | Score : 33777.83 | Agent eps. : 0.010 | Avg. score, last 100 games : 22585.745
+Current score: 22585.745 < 23515.240
+Restoring prev. model...
+Episode T= 491 / 500 | Score : 63473.09 | Agent eps. : 0.010 | Avg. score, last 100 games : 23574.253
+Episode T= 492 / 500 | Score : 47862.84 | Agent eps. : 0.010 | Avg. score, last 100 games : 23728.860
+Episode T= 493 / 500 | Score : 37066.20 | Agent eps. : 0.010 | Avg. score, last 100 games : 23899.841
+Episode T= 494 / 500 | Score : 44547.03 | Agent eps. : 0.010 | Avg. score, last 100 games : 24151.674
+Episode T= 495 / 500 | Score : 3786.10 | Agent eps. : 0.010 | Avg. score, last 100 games : 23833.489
+Episode T= 496 / 500 | Score : -93731.09 | Agent eps. : 0.010 | Avg. score, last 100 games : 22563.882
+Episode T= 497 / 500 | Score : 30440.86 | Agent eps. : 0.010 | Avg. score, last 100 games : 22638.112
+Episode T= 498 / 500 | Score : -92183.87 | Agent eps. : 0.010 | Avg. score, last 100 games : 21602.616
+Episode T= 499 / 500 | Score : 42029.33 | Agent eps. : 0.010 | Avg. score, last 100 games : 22087.049
+Episode T= 500 / 500 | Score : 40503.93 | Agent eps. : 0.010 | Avg. score, last 100 games : 22158.637
+Current score: 22158.637 < 23515.240
+Restoring prev. model...
+Directory already exists!
+Moviepy - Building video videos/render.mp4.
+Moviepy - Writing video videos/render.mp4
+
+Moviepy - Done !                                                                                              
+Moviepy - video ready videos/render.mp4
+**TEST SCORE: 52544.122
