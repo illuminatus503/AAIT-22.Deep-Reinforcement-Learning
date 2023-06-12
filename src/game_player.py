@@ -18,7 +18,7 @@ class DiscreteGamePlatform:
             gamma=0.99,
             epsilon=1.0,
             lr=5e-4,
-            input_dim=self._input_dims,
+            input_dims=self._input_dims,
             n_actions=self._n_actions,
             mem_size=int(1e6),
             batch_size=64,
@@ -56,7 +56,7 @@ class DiscreteGamePlatform:
         #     self._input_dims = int(self._obs_space.n)
         # else:
         #     raise ValueError("Entorno incompatible! Espacio de observaciones continuo!")
-        self._input_dims = self._obs_space.shape[0]
+        self._input_dims = self._obs_space.shape
 
         print(f"Espacio de observaciones: {self._input_dims}")
         print(f"Espacio de acciones: {self._n_actions}")

@@ -3,6 +3,9 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 
+from torchvision import transforms
+from torchvision.models import resnet18
+
 
 class AbstractDQN(nn.Module):
     def __init__(
@@ -83,12 +86,28 @@ class DuelingDeepQNetwork(AbstractDQN):
         )
 
         ## Arquitectura
-        # Capa principal: detección inicial
-        self._fc1 = nn.Linear(input_dim, 512, device=self._device)
+        self._transforms = transforms.Compose(
+            [
+                transforms.Resize(256),
+                transforms.CenterCrop(224),
+                transforms.ToTensor(),
+                transforms.Normalize(
+                    mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
+                ),
+            ]
+        )
+        self._resnet = resnet18(pretrained=True)
+
+        # Freeze RESNET
+        # Congelar los pesos de todas las capas excepto la última capa lineal
+        for name, param in resnet18.named_parameters():
+            if name != "fc.weight" and name != "fc.bias":
+                param.requires_grad = False
+
         # Value function
-        self._V = nn.Linear(512, 1, device=self._device)
+        self._V = nn.Linear(10, 1, device=self._device)
         # Advantage function
-        self._A = nn.Linear(512, n_actions, device=self._device)
+        self._A = nn.Linear(10, n_actions, device=self._device)
 
         # Optimizador por defecto para ambas redes
         self.optimiser = optim.Adam(self.parameters(), lr)
@@ -98,9 +117,10 @@ class DuelingDeepQNetwork(AbstractDQN):
         self.to(self._device)
 
     def forward(self, state):
-        flat1 = F.relu(self._fc1(state))
-        V_out = self._V(flat1)
-        A_out = self._A(flat1)
+        transformed = self._transforms(state)
+        out = self._resnet.forward(transformed)
+        V_out = self._V(out)
+        A_out = self._A(out)
         return V_out, A_out
 
     def get_action(self, state):

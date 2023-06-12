@@ -35,24 +35,24 @@ class EpsilonRate:
 
 
 class Agent:
-    def __init_mem(self, mem_size, input_dim, batch_size):
+    def __init_mem(self, mem_size, input_dims, batch_size):
         self._batch_idx = T.arange(batch_size, dtype=T.int32, device=self._device)
 
         # Replay Buffer
         self._memory = ReplayBuffer(
             mem_size=mem_size,
-            input_dim=input_dim,
+            input_dims=input_dims,
             alpha=self._lr,
             batch_size=batch_size,
             device=self._device,
         )
 
-    def __init_q_func(self, input_dim, chkpt_dir, eps, min_eps, decr_rate):
+    def __init_q_func(self, input_dims, chkpt_dir, eps, min_eps, decr_rate):
         self._chkpt_dir = chkpt_dir
 
         # Evaluation functions
         self._q_funcs = DoubleDQN(
-            input_dims=input_dim,
+            input_dims=input_dims,
             lr=self._lr,
             n_actions=self._n_actions,
             device=self._device,
@@ -66,7 +66,7 @@ class Agent:
         self,
         lr: float,
         gamma: float,
-        input_dim: int,
+        input_dims: int,
         n_actions: int,
         epsilon: float = 1.0,
         eps_min: float = 0.01,
@@ -89,9 +89,9 @@ class Agent:
         self._n_actions = n_actions
 
         # Q-Function(s)
-        self.__init_mem(mem_size=mem_size, input_dim=input_dim, batch_size=batch_size)
+        self.__init_mem(mem_size=mem_size, input_dims=input_dims, batch_size=batch_size)
         self.__init_q_func(
-            input_dim=input_dim,
+            input_dims=input_dims,
             chkpt_dir=chkpt_dir,
             eps=epsilon,
             min_eps=eps_min,

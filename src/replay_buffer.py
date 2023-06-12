@@ -6,10 +6,10 @@ class ReplayBuffer:
     def __init_mems(self):
         # In Torch, default dtype=torch.float32
         self._state_memory = T.zeros(
-            self._mem_size, self._input_dim, device=self._device
+            self._mem_size, *self._input_dims, device=self._device
         )
         self._nstate_memory = T.zeros(
-            self._mem_size, self._input_dim, device=self._device
+            self._mem_size, *self._input_dims, device=self._device
         )
         self._action_memory = T.zeros(
             self._mem_size, dtype=T.int64, device=self._device
@@ -23,7 +23,7 @@ class ReplayBuffer:
 
     def __init__(
         self,
-        input_dim: int,
+        input_dims,
         alpha: float,
         mem_size: int = int(1e5),
         batch_size: int = 32,
@@ -31,7 +31,7 @@ class ReplayBuffer:
         kappa: float = 0.6,
         device: T.device | str = "cpu",
     ):
-        self._input_dim = input_dim
+        self._input_dims = input_dims
         self._device = device
 
         # Hyperparameters
