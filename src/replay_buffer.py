@@ -22,16 +22,14 @@ class ReplayBuffer:
         self,
         mem_size: int,
         input_dim: int,
-        alpha: float,
-        beta: float,
-        kappa: float,
+        batch_size: int,
         device: T.device | str = "cpu",
-        eps: float = 1e-2,
     ):
         self._input_dim = input_dim
         self._device = device
 
         self._mem_size = mem_size
+        self._batch_size = batch_size
         self._mem_length = 0
 
         self.__init_mems()
@@ -61,40 +59,23 @@ class ReplayBuffer:
         self._action_memory[mem_idx] = action
         self._terminal_memory[mem_idx] = done
 
-        # Actualizamos la prioridad para el índice dado
-        self._priorities[mem_idx] = max(1.0, T.max(self._priorities).item())
+    def is_enough_batched(self):
+        return self._mem_idx >= self._batch_size
 
-    def _get_priority(self, error):
-        return (T.abs(error) + self._eps) ** self._alpha
+    def __get_batch(self):
+        uniform_sample = T.ones(self._mem_length, device=self.device)
 
-    def update_priorities(self, idx, error):
-        self._priorities[idx] = self._get_priority(error)
-
-    def __get_probs(self):
-        likelyhood = (
-            T.clone(self._priorities[: self._mem_length]).detach() ** self._kappa
-        )
-        probs = likelyhood / T.sum(likelyhood).item()
-        return probs
-
-    def __get_batch(self, probs, batch_size: int):
-        random_sample = probs.multinomial(
-            num_samples=batch_size,
-            replacement=False,
+        # Sampleamos los índices del vector.
+        random_sample = uniform_sample.multinomial(
+            num_samples=self._batch_size, replacement=False
         )
 
         return random_sample
 
-    def __get_importance(self, probs):
-        importance = (self._mem_length * probs) ** -self._beta
-        importance_n = importance / T.max(importance).item()
-        return importance_n
-
-    def sample_buffer(self, batch_size: int):
+    def sample_buffer(self):
         # Obtenemos un batch aleatorio a partir de los índices
         # de memoria.
-        sample_probabilities = self.__get_probs()
-        batch_range = self.__get_batch(sample_probabilities, batch_size)
+        batch_range = self.__get_batch()
 
         # Estos serán los valores que se devolverán.
         batch = (
