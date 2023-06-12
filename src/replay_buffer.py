@@ -1,4 +1,5 @@
 import torch as T
+import torch.nn.functional as F
 
 
 class ReplayBuffer:
@@ -18,37 +19,48 @@ class ReplayBuffer:
             self._mem_size, dtype=T.bool, device=self._device
         )
 
+        self._priorities = T.zeros(self._mem_size, device=self._device)
+
     def __init__(
         self,
-        mem_size: int,
         input_dim: int,
-        batch_size: int,
+        alpha: float,
+        mem_size: int = int(1e5),
+        batch_size: int = 32,
+        beta: float = 0.4,
+        kappa: float = 0.6,
         device: T.device | str = "cpu",
     ):
         self._input_dim = input_dim
         self._device = device
 
-        self._mem_size = mem_size
-        self._batch_size = batch_size
-        self._mem_length = 0
-
-        self.__init_mems()
-
-        # Prioritised Experience Replay
+        # Hyperparameters
         self._alpha = alpha
         self._beta = beta
         self._kappa = kappa
-        self._eps = eps
+        self._eps = 1e-6  # For numerical stability
 
-        self._priorities = T.zeros(self._mem_size, device=self._device)
+        self._mem_size = mem_size
+        self._batch_size = batch_size
+
+        # Initialise memory
+        self._mem_length = 0
+        self.__init_mems()
+
+    def is_enough_batched(self):
+        return self._mem_length >= self._batch_size
 
     def __get_mem_idx(self):
         mem_idx = int(T.argmin(self._priorities).item())
-
         if self._mem_length < self._mem_size:
             self._mem_length += 1
-
         return mem_idx
+
+    def __get_priority(self):
+        priority = T.max(self._priorities).item()
+        if priority > 1.0:
+            return priority
+        return 1.0
 
     def store_transition(self, state, action, reward, next_state, done):
         mem_idx = self.__get_mem_idx()
@@ -58,36 +70,37 @@ class ReplayBuffer:
         self._reward_memory[mem_idx] = reward
         self._action_memory[mem_idx] = action
         self._terminal_memory[mem_idx] = done
+        self._priorities[mem_idx] = self.__get_priority()
 
-    def is_enough_batched(self):
-        return self._mem_idx >= self._batch_size
-
-    def __get_batch(self):
-        uniform_sample = T.ones(self._mem_length, device=self.device)
-
-        # Sampleamos los índices del vector.
-        random_sample = uniform_sample.multinomial(
-            num_samples=self._batch_size, replacement=False
+    def __sample_experience(self):
+        return F.normalize(
+            self._priorities[: self._mem_length] ** self._kappa, p=1.0, dim=0
         )
 
+    def __get_batch(self, probs):
+        random_sample = probs.multinomial(
+            num_samples=self._batch_size,
+            replacement=False,
+        )
         return random_sample
 
-    def sample_buffer(self):
-        # Obtenemos un batch aleatorio a partir de los índices
-        # de memoria.
-        batch_range = self.__get_batch()
+    def __compute_importance_sampling(self, probs):
+        importance = (self._mem_length * probs) ** -self._beta
+        importance_n = importance / T.max(importance).item()
+        return importance_n
 
-        # Estos serán los valores que se devolverán.
-        batch = (
+    def sample_buffer(self):
+        probabilities = self.__sample_experience()
+        batch_range = self.__get_batch(probabilities)
+        return (
             self._state_memory[batch_range],
             self._action_memory[batch_range],
             self._reward_memory[batch_range],
             self._nstate_memory[batch_range],
             self._terminal_memory[batch_range],
-            self.__get_importance(sample_probabilities[batch_range]),
+            self.__compute_importance_sampling(probabilities[batch_range]),
         )
 
-        return batch
-    
-    def __len__(self):
-        return self._mem_length    
+    def update_experiences(self, idx, error):
+        # self._priorities[idx] = (T.abs(error) + self._eps) ** self._alpha
+        self._priorities[idx] = T.abs(error)  # Like in Rainbow
