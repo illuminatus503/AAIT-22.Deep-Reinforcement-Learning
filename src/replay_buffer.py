@@ -16,11 +16,18 @@ class ReplayBuffer:
             self._mem_size, dtype=T.bool, device=self.device
         )
 
-    def __init__(self, mem_size: int, input_dim: int, device: T.device | str = "cpu"):
+    def __init__(
+        self,
+        mem_size: int,
+        input_dim: int,
+        batch_size: int,
+        device: T.device | str = "cpu",
+    ):
         self._input_dim = input_dim
         self.device = device
 
         self._mem_size = mem_size
+        self._batch_size = batch_size
         self._mem_length = 0
         self._mem_idx = 0
 
@@ -51,25 +58,23 @@ class ReplayBuffer:
         self._action_memory[mem_idx] = action
         self._terminal_memory[mem_idx] = done
 
-    def __get_batch(self, batch_size: int):
-        """
-        Simple random sample.
-        TODO Update to a Good Reply Buffer.
-        """
+    def is_enough_batched(self):
+        return self._mem_idx >= self._batch_size
 
+    def __get_batch(self):
         uniform_sample = T.ones(self._mem_length, device=self.device)
 
         # Sampleamos los índices del vector.
         random_sample = uniform_sample.multinomial(
-            num_samples=batch_size, replacement=False
+            num_samples=self._batch_size, replacement=False
         )
 
         return random_sample
 
-    def sample_buffer(self, batch_size: int):
+    def sample_buffer(self):
         # Obtenemos un batch aleatorio a partir de los índices
         # de memoria.
-        batch_range = self.__get_batch(batch_size)
+        batch_range = self.__get_batch()
 
         # Estos serán los valores que se devolverán.
         batch = (

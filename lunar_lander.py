@@ -32,7 +32,7 @@ def load_agent(load_checkpoint: bool = False, device: T.device | str = "cpu") ->
     )
 
     if load_checkpoint:
-        agent.load_models()
+        agent.load_model()
 
     return agent
 
@@ -106,13 +106,13 @@ def train_agent(
         if i % save_period == 0:
             if prev_avg_score < avg_score:
                 print("Saving model...")
-                agent.save_models()
+                agent.save_model()
 
                 prev_avg_score = avg_score
             else:
                 print(f"Current score: {avg_score:1.3f} < {prev_avg_score:1.3f}")
                 print("Restoring prev. model...")
-                agent.load_models()
+                agent.load_model()
 
                 avg_score = prev_avg_score
                 del score_stack[-save_period:]
