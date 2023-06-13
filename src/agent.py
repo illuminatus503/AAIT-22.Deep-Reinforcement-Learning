@@ -44,7 +44,6 @@ class Agent:
             """
             Filter only green part of image
             """
-            state = np.array(state.cpu())
             hsv_im = cv2.cvtColor(state, cv2.COLOR_BGR2HSV)
             mask_g = cv2.inRange(hsv_im, (36, 25, 25), (70, 255, 255))
 
@@ -53,25 +52,32 @@ class Agent:
             green[imask_green] = state[imask_green]
             return green
 
+        def grayscale(state):
+            return cv2.cvtColor(src=state, code=cv2.COLOR_RGB2GRAY)
+
+        def gaussian_blur(state):
+            return cv2.GaussianBlur(src=state, ksize=(5, 5), sigmaX=0.0)
+
         def canny_edges(state):
-            return cv2.Canny(np.array(state.cpu()), 50, 150)
+            return cv2.Canny(image=state, threshold1=50, threshold2=150)
 
-        def set_format(state):
-            state = state.cpu().to(T.float32)
-            n = len(state.shape)
-            if n == 3:
-                state = state.unsqueeze(0)
-            return state.permute(0, n - 1, *list(range(1, n - 1)))
+        def normalize(state):
+            return cv2.normalize(
+                state.astype(np.float32),
+                None,
+                0.0,
+                1.0,
+                cv2.NORM_MINMAX,
+                dtype=cv2.CV_32F,
+            )
 
-        self._transforms = transforms.Compose(
+        self._image_transforms = transforms.Compose(
             [
-                # transforms.Lambda(only_green_mask),
-                # transforms.Lambda(set_format),
-                transforms.Grayscale(),
-                transforms.GaussianBlur(kernel_size=5),
-                # transforms.Lambda(canny_edges),
-                # transforms.ToTensor(),
-                transforms.Normalize(mean=0.0, std=1.0),
+                transforms.Lambda(only_green_mask),
+                transforms.Lambda(grayscale),
+                transforms.Lambda(gaussian_blur),
+                transforms.Lambda(canny_edges),
+                transforms.Lambda(normalize),
             ]
         )
 
@@ -100,7 +106,7 @@ class Agent:
         )
 
         # Epsilon rate
-        self._eps_rate = EpsilonRate(n_steps=100, init_eps=eps, min_eps=min_eps)
+        self._eps_rate = EpsilonRate(n_steps=1000, init_eps=eps, min_eps=min_eps)
 
     def __init__(
         self,
@@ -129,8 +135,9 @@ class Agent:
 
         # Q-Function(s)
         self.__define_transforms()  # Transformamos la imagen a 96x96x1
-        # No alteramos el tamaño de la memoria para evitar overhead por transformaciones
-        self.__init_mem(mem_size=mem_size, input_dims=input_dims, batch_size=batch_size)
+        self.__init_mem(
+            mem_size=mem_size, input_dims=input_dims[:2], batch_size=batch_size
+        )
         self.__init_q_func(
             input_dims=input_dims[:2],
             chkpt_dir=chkpt_dir,
@@ -144,10 +151,10 @@ class Agent:
 
     def store_transition(self, state, action, reward, next_state, done):
         self._memory.store_transition(
-            T.from_numpy(state).to(T.float32).to(self._device),
+            T.from_numpy(self._image_transforms(state)).to(self._device),  # Solo verde
             action,
             reward,
-            T.from_numpy(next_state).to(T.float32).to(self._device),
+            T.from_numpy(self._image_transforms(next_state)).to(self._device),
             done,
         )
 
@@ -159,10 +166,8 @@ class Agent:
 
     def choose_action(self, state):
         if self._eps_rate.choose_rand():
-            state = T.from_numpy(state).to(T.float32)
-            state = state.permute(2, 0, 1)
-            state = state.view(1, *state.shape)
-            state = self._transforms(state)
+            state = T.from_numpy(self._image_transforms(state))
+            state = state.view(1, 1, *state.shape)
             return self._q_funcs.get_action(state.to(self._device))
 
         return T.randint(0, self._n_actions, (1,)).item()
@@ -185,10 +190,8 @@ class Agent:
         self._q_funcs.zero_grad()
 
         # Transform input states
-        states = self._transforms(states.permute(0, 3, 1, 2))
-        next_states = self._transforms(next_states.permute(0, 3, 1, 2))
-        # states = self._transforms(states)
-        # next_states = self._transforms(next_states)
+        states = states.unsqueeze(1)
+        next_states = next_states.unsqueeze(1)
 
         # Q1: seleccionamos los Q-valores
         V_s, A_s = self._q_funcs.forward(states)

@@ -9,6 +9,9 @@ from gymnasium.wrappers.monitoring.video_recorder import VideoRecorder
 import torch as T
 import numpy as np
 
+import sys
+import time
+
 from .agent import Agent
 
 
@@ -76,13 +79,15 @@ class DiscreteGamePlatform:
         done = int(terminated and truncated)
         return (next_state, reward, done, info)
 
-    def __run_training_step(self) -> float:
-        done = False
-        score = 0.0
-
+    def __run_training_step(self, MAX_STEPS=1000) -> float:
         # Iniciamos el entorno en el estado inicial.
+        step = 1
+        done = False
+
+        score = 0.0
         state = DiscreteGamePlatform.__reset_env(self._env)
-        while not done:
+
+        while not done and step <= MAX_STEPS:
             action = self._agent.choose_action(state)
             next_state, reward, done, _ = DiscreteGamePlatform.__get_next_state(
                 self._env, action
@@ -96,6 +101,14 @@ class DiscreteGamePlatform:
             state = next_state
             score += float(reward)
 
+            if step % 10 == 0:
+                print(
+                    f"    ** Train step {step:3d} / {MAX_STEPS} | "
+                    f"REWARD : {float(reward):{'+' if reward else ' '}1.7e} | "
+                    f"SCORE : {score:{'+' if score else ' '}5.3f}pts"
+                )
+            step += 1
+
         return score
 
     def train_agent(
@@ -105,6 +118,12 @@ class DiscreteGamePlatform:
         prev_avg_score = -float("inf")
 
         for i in range(1, num_games + 1):
+            print(
+                f"EPOCH {i:4d} / {num_games} "
+                f"BEGIN at {time.strftime('%d/%m/%Y %H:%M:%S')} "
+            )
+            sys.stdout.flush()
+
             score = self.__run_training_step()
 
             # Guardamos los resultados parciales
@@ -112,10 +131,10 @@ class DiscreteGamePlatform:
             avg_score = np.mean(score_stack[-game_sample:])
 
             print(
-                f"Episode T={i:4d} / {num_games} | "
-                f"Score : {score:1.2f} | "
+                f"END at {time.strftime('%d/%m/%Y %H:%M:%S')} with "
+                f"Score : {score:5.3f} | "
                 f"Agent eps. : {self._agent.eps:1.3f} | "
-                f"Avg. score, last {game_sample:3d} games : {avg_score:1.3f}"
+                f"Avg. score, last {game_sample:3d} games : {avg_score:5.3f}"
             )
 
             if i % save_period == 0:
@@ -125,7 +144,7 @@ class DiscreteGamePlatform:
 
                     prev_avg_score = avg_score
                 else:
-                    print(f"Current score: {avg_score:1.3f} < {prev_avg_score:1.3f}")
+                    print(f"Current score: {avg_score:5.3f} < {prev_avg_score:5.3f}")
                     print("Restoring prev. model...")
                     self._agent.load_model()
                     del score_stack[-save_period:]
