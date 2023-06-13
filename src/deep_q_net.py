@@ -94,7 +94,6 @@ class DuelingDeepQNetwork(AbstractDQN):
             lr, n_actions, input_dim, chkpoint_file, device
         )
 
-        flatten_features = 83 * 83 * 32  # Para una entrada de 96x96x1
         self._seq = nn.Sequential(
             nn.Conv2d(1, 16, 8, device=self._device),
             nn.ReLU(),
@@ -103,7 +102,7 @@ class DuelingDeepQNetwork(AbstractDQN):
             nn.Conv2d(32, 32, 3, device=self._device),
             nn.ReLU(),
             nn.Flatten(),
-            nn.Linear(flatten_features, 32, device=self._device),
+            nn.Linear(83 * 83 * 32, 32, device=self._device),
         )
 
         # Value function

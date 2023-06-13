@@ -56,13 +56,21 @@ class Agent:
         def canny_edges(state):
             return cv2.Canny(np.array(state.cpu()), 50, 150)
 
+        def set_format(state):
+            state = state.cpu().to(T.float32)
+            n = len(state.shape)
+            if n == 3:
+                state = state.unsqueeze(0)
+            return state.permute(0, n - 1, *list(range(1, n - 1)))
+
         self._transforms = transforms.Compose(
             [
-                transforms.Lambda(only_green_mask),
+                # transforms.Lambda(only_green_mask),
+                # transforms.Lambda(set_format),
                 transforms.Grayscale(),
                 transforms.GaussianBlur(kernel_size=5),
-                transforms.Lambda(canny_edges),
-                transforms.ToTensor(),
+                # transforms.Lambda(canny_edges),
+                # transforms.ToTensor(),
                 transforms.Normalize(mean=0.0, std=1.0),
             ]
         )
@@ -136,10 +144,10 @@ class Agent:
 
     def store_transition(self, state, action, reward, next_state, done):
         self._memory.store_transition(
-            T.from_numpy(state).to(self._device),
+            T.from_numpy(state).to(T.float32).to(self._device),
             action,
             reward,
-            T.from_numpy(next_state).to(self._device),
+            T.from_numpy(next_state).to(T.float32).to(self._device),
             done,
         )
 
@@ -151,12 +159,11 @@ class Agent:
 
     def choose_action(self, state):
         if self._eps_rate.choose_rand():
-            state = T.from_numpy(state).to(self._device)
-            state = self._transforms(state)
+            state = T.from_numpy(state).to(T.float32)
+            state = state.permute(2, 0, 1)
             state = state.view(1, *state.shape)
-            state = state.permute(0, 3, 1, 2)
-
-            return self._q_funcs.get_action(state)
+            state = self._transforms(state)
+            return self._q_funcs.get_action(state.to(self._device))
 
         return T.randint(0, self._n_actions, (1,)).item()
 
@@ -178,8 +185,10 @@ class Agent:
         self._q_funcs.zero_grad()
 
         # Transform input states
-        states = self._transforms(states).permute(0, 3, 1, 2)
-        next_states = self._transforms(next_states).permute(0, 3, 1, 2)
+        states = self._transforms(states.permute(0, 3, 1, 2))
+        next_states = self._transforms(next_states.permute(0, 3, 1, 2))
+        # states = self._transforms(states)
+        # next_states = self._transforms(next_states)
 
         # Q1: seleccionamos los Q-valores
         V_s, A_s = self._q_funcs.forward(states)
