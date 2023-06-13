@@ -98,17 +98,6 @@ class Agent:
             min_eps=eps_min,
         )
 
-        self._transforms = transforms.Compose(
-            [
-                transforms.Resize(256, antialias=True),
-                transforms.CenterCrop(224),
-                transforms.ToTensor(),
-                transforms.Normalize(
-                    mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
-                ),
-            ]
-        )
-
     @property
     def eps(self):
         return self._eps_rate.eps
@@ -126,7 +115,13 @@ class Agent:
 
     def choose_action(self, state):
         if self._eps_rate.choose_rand():
-            return self._q_funcs.get_action(T.from_numpy(state).to(self._device))
+            state = T.from_numpy(state).to(self._device)
+
+            state = state.to(T.float32)
+            state = state.view(1, *state.shape)
+            state = state.permute(0, 3, 1, 2)
+
+            return self._q_funcs.get_action(state)
 
         return T.randint(0, self._n_actions, (1,)).item()
 
@@ -148,8 +143,8 @@ class Agent:
         self._q_funcs.zero_grad()
 
         # Transform input states
-        # transformed_states = self._transforms(states)
-        # transformed_nstates = self._transforms(next_states)
+        states = states.permute(0, 3, 1, 2)
+        new_states = new_states.permute(0, 3, 1, 2)
 
         # Q1: seleccionamos los Q-valores
         V_s, A_s = self._q_funcs.forward(states)

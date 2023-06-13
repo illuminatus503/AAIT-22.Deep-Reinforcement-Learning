@@ -94,18 +94,6 @@ class DuelingDeepQNetwork(AbstractDQN):
             lr, n_actions, input_dim, chkpoint_file, device
         )
 
-        ## Arquitectura
-        # self._resnet = models.resnet18(
-        #     progress=True, weights=models.ResNet18_Weights.DEFAULT
-        # )
-
-        # # Freeze RESNET
-        # # Congelar los pesos de todas las capas excepto la última capa lineal
-        # for name, param in self._resnet.named_parameters():
-        #     if name != "fc.weight" and name != "fc.bias":
-        #         param.requires_grad = False
-
-        # flatten_features = DuelingDeepQNetwork.__flatten_features(input_dim[0])
         flatten_features = 83 * 83 * 64  # Para una entrada de 96x96
         self._seq = nn.Sequential(
             nn.Conv2d(3, 32, 8, device=self._device),
@@ -131,23 +119,11 @@ class DuelingDeepQNetwork(AbstractDQN):
         self.to(self._device)
 
     def forward(self, state):
-        state = state.to(T.float32)
-        # Si el vector (height, width, channels)
-        if len(state.shape) == 3:
-            state = state.view(1, *state.shape)
-        # después (1, height, width, channels)
-
-        # Supongamos que x tiene la forma (batch_size, height, width, channels)
-        state = state.permute(0, 3, 1, 2)
-        # Ahora x tiene la forma (batch_size, channels, height, width)
-
-        # out = self._resnet.forward(state)
         x = self._seq(state)
         V_out = self._V(x)
         A_out = self._A(x)
         return V_out, A_out
 
     def get_action(self, state):
-        state = state.to(T.float32)
         _, advantage = self.forward(state)
         return T.argmax(advantage).item()
