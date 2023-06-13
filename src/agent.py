@@ -6,10 +6,10 @@ from .deep_q_net import DuelingDeepQNetwork
 
 
 class EpsilonRate:
-    def __init__(self, init_eps=1.0, min_eps=0.01, decr_rate=0.001):
+    def __init__(self, n_steps, init_eps=1.0, min_eps=0.01):
         self._eps = init_eps
         self._min_eps = min_eps
-        self._decr_rate = decr_rate
+        self._decr_rate = (init_eps - min_eps) / n_steps
 
     @property
     def eps(self):
@@ -47,7 +47,7 @@ class Agent:
             device=self._device,
         )
 
-    def __init_q_func(self, input_dims, chkpt_dir, eps, min_eps, decr_rate):
+    def __init_q_func(self, input_dims, chkpt_dir, eps, min_eps):
         self._chkpt_dir = chkpt_dir
 
         # Evaluation functions
@@ -60,7 +60,7 @@ class Agent:
         )
 
         # Epsilon rate
-        self._eps_rate = EpsilonRate(init_eps=eps, min_eps=min_eps, decr_rate=decr_rate)
+        self._eps_rate = EpsilonRate(n_steps=100, init_eps=eps, min_eps=min_eps)
 
     def __init__(
         self,
@@ -70,7 +70,6 @@ class Agent:
         n_actions: int,
         epsilon: float = 1.0,
         eps_min: float = 0.01,
-        eps_dec: float = 1e-4,
         batch_size: int = 32,
         mem_size: int = int(1e5),
         replace: int = int(1e3),
@@ -95,7 +94,6 @@ class Agent:
             chkpt_dir=chkpt_dir,
             eps=epsilon,
             min_eps=eps_min,
-            decr_rate=eps_dec,
         )
 
     @property

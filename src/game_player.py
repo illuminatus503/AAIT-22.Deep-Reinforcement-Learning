@@ -15,15 +15,14 @@ from .agent import Agent
 class DiscreteGamePlatform:
     def __load_agent(self, load_checkpoint):
         self._agent = Agent(
+            lr=5e-4,
             gamma=0.99,
             epsilon=1.0,
-            lr=5e-4,
+            eps_min=1e-2,
             input_dims=self._input_dims,
             n_actions=self._n_actions,
-            mem_size=int(1e6),
+            mem_size=512, # Reducido, de 1.000.000 de ejemplos
             batch_size=64,
-            eps_min=1e-2,
-            eps_dec=1e-4,
             replace=100,
             device=self._device,
             chkpt_dir=self._checkpoint_dir,
@@ -52,10 +51,6 @@ class DiscreteGamePlatform:
             raise ValueError("Entorno incompatible! Espacio de acciones continuo!")
 
         self._obs_space = self._env.observation_space
-        # if isinstance(self._obs_space, Discrete):
-        #     self._input_dims = int(self._obs_space.n)
-        # else:
-        #     raise ValueError("Entorno incompatible! Espacio de observaciones continuo!")
         self._input_dims = self._obs_space.shape
 
         print(f"Espacio de observaciones: {self._input_dims}")
