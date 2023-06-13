@@ -59,7 +59,7 @@ class Agent:
             [
                 transforms.Lambda(only_green_mask),
                 transforms.Grayscale(),
-                transforms.GaussianBlur(),
+                transforms.GaussianBlur(kernel_size=5),
                 transforms.Lambda(canny_edges),
                 transforms.ToTensor(),
                 transforms.Normalize(mean=0.0, std=1.0),
@@ -119,8 +119,10 @@ class Agent:
         self._n_actions = n_actions
 
         # Q-Function(s)
-        self.__define_transforms() # Transformamos la imagen a 96x96x1
-        self.__init_mem(mem_size=mem_size, input_dims=input_dims[:2], batch_size=batch_size)
+        self.__define_transforms()  # Transformamos la imagen a 96x96x1
+        self.__init_mem(
+            mem_size=mem_size, input_dims=input_dims[:2], batch_size=batch_size
+        )
         self.__init_q_func(
             input_dims=input_dims[:2],
             chkpt_dir=chkpt_dir,
