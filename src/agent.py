@@ -144,7 +144,7 @@ class Agent:
 
         # Transform input states
         states = states.permute(0, 3, 1, 2)
-        new_states = new_states.permute(0, 3, 1, 2)
+        next_states = next_states.permute(0, 3, 1, 2)
 
         # Q1: seleccionamos los Q-valores
         V_s, A_s = self._q_funcs.forward(states)
