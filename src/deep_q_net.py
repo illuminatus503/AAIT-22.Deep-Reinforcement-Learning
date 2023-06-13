@@ -100,13 +100,13 @@ class DuelingDeepQNetwork(AbstractDQN):
             nn.Conv2d(32, 64, 5, device=self._device),
             nn.Conv2d(64, 64, 3, device=self._device),
             nn.Flatten(),
-            nn.Linear(64, 5, device=self._device),
+            nn.Linear(64 * 64 * 3, 64, device=self._device),
         )
 
         # Value function
-        self._V = nn.Linear(5, 1, device=self._device)
+        self._V = nn.Linear(64, 1, device=self._device)
         # Advantage function
-        self._A = nn.Linear(5, n_actions, device=self._device)
+        self._A = nn.Linear(64, n_actions, device=self._device)
 
         # Optimizador por defecto para ambas redes
         self.optimiser = optim.Adam(self.parameters(), lr)
