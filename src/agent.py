@@ -114,8 +114,10 @@ class Agent:
         return self._eps_rate.eps
 
     def store_transition(self, state, action, reward, next_state, done):
-        state_ = T.from_numpy(state).to(self._device)
-        next_state_ = T.from_numpy(next_state).to(self._device)
+        # state_ = T.from_numpy(state).to(self._device)
+        # next_state_ = T.from_numpy(next_state).to(self._device)
+        state_ = T.from_numpy(state)
+        next_state_ = T.from_numpy(next_state)
         self._memory.store_transition(state_, action, reward, next_state_, done)
 
     def save_model(self):
@@ -140,6 +142,13 @@ class Agent:
             terminal_states,
             importance,
         ) = self._memory.sample_buffer()
+
+        states = states.to(self._device)
+        actions = actions.to(self._device)
+        rewards = rewards.to(self._device)
+        next_states = next_states.to(self._device)
+        terminal_states = terminal_states.to(self._device)
+        importance = importance.to(self._device)
 
         ## Entrenamos! Solamente entrenamos Q1 (q_eval)
         ## Q2 (q_next) es una copia anterior de Q1 o random (al principio)

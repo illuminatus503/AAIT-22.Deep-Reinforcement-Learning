@@ -32,7 +32,7 @@ class ReplayBuffer:
         device: T.device | str = "cpu",
     ):
         self._input_dims = input_dims
-        self._device = device
+        self._device = 'cpu'
 
         # Hyperparameters
         self._alpha = alpha
