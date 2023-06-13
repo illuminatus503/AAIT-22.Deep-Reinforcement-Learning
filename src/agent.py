@@ -44,6 +44,7 @@ class Agent:
             """
             Filter only green part of image
             """
+            state = np.array(state)
             hsv_im = cv2.cvtColor(state, cv2.COLOR_BGR2HSV)
             mask_g = cv2.inRange(hsv_im, (36, 25, 25), (70, 255, 255))
 
