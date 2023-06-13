@@ -77,9 +77,9 @@ class DuelingDeepQNetwork(AbstractDQN):
         """
         output_size = (input_size + 2 * padding - kernel_size) / stride + 1
         """
-        out1_s = (in_size + 2 * 0 - 8) / 1 + 1
-        out2_s = (out1_s + 2 * 0 - 5) / 1 + 1
-        out3_s = (out2_s + 2 * 0 - 3) / 1 + 1
+        out1_s = int((in_size + 2 * 0 - 8) / 1 + 1)
+        out2_s = int((out1_s + 2 * 0 - 5) / 1 + 1)
+        out3_s = int((out2_s + 2 * 0 - 3) / 1 + 1)
         return out3_s * out3_s * 32
 
     def __init__(
@@ -94,6 +94,8 @@ class DuelingDeepQNetwork(AbstractDQN):
             lr, n_actions, input_dim, chkpoint_file, device
         )
 
+        flatten_size = DuelingDeepQNetwork.__flatten_features(input_dim[0])
+
         self._seq = nn.Sequential(
             nn.Conv2d(1, 16, 8, device=self._device),
             nn.ReLU(),
@@ -102,7 +104,11 @@ class DuelingDeepQNetwork(AbstractDQN):
             nn.Conv2d(32, 32, 3, device=self._device),
             nn.ReLU(),
             nn.Flatten(),
-            nn.Linear(83 * 83 * 32, 32, device=self._device),
+            nn.Linear(
+                flatten_size,
+                32,
+                device=self._device,
+            ),
         )
 
         # Value function

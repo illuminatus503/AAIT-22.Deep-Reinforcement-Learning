@@ -88,6 +88,7 @@ class DiscreteGamePlatform:
         score = 0.0
         state = DiscreteGamePlatform.__reset_env(self._env)
 
+        avg_reward = []
         reward_list = []
 
         while not done and step <= MAX_STEPS:
@@ -95,6 +96,10 @@ class DiscreteGamePlatform:
             next_state, reward, done, _ = DiscreteGamePlatform.__get_next_state(
                 self._env, action
             )
+            
+            # Clip, in order to avoid high speeds
+            # https://notanymike.github.io/Solving-CarRacing/
+            reward = np.clip(reward, a_max=1.0, a_min=None)
 
             # Guardaríamos una observación y aprenderíamos.
             self._agent.store_transition(state, action, reward, next_state, done)
@@ -102,17 +107,19 @@ class DiscreteGamePlatform:
 
             # Avanzaríamos al siguiente momento
             state = next_state
+            avg_reward.append(float(reward))
             score += float(reward)
 
             if step % 10 == 0:
+                avg = np.average(avg_reward)
                 print(
                     f"    ** Train step {step:3d} / {MAX_STEPS} | "
-                    f"REWARD : {float(reward):{'+' if reward else ' '}1.7e} | "
+                    f"REWARD (AVG. last 10 steps) : {avg:{'+' if reward else ' '}1.7e} | "
                     f"SCORE : {score:{'+' if score else ' '}5.3f}pts"
                 )
+                reward_list.append(avg)
+                avg_reward.clear()
             step += 1
-
-            reward_list.append(reward)
 
         return score, reward_list
 

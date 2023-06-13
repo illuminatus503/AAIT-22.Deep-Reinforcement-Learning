@@ -78,3 +78,6 @@ class DoubleDQN(nn.Module):
 
     def optimiser_step(self):
         self._q_eval.optimiser.step()
+
+    def clip_grad(self):
+        T.nn.utils.clip_grad_norm_(self._q_eval.parameters(), max_norm=1.0)

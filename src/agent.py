@@ -39,6 +39,8 @@ class EpsilonRate:
 
 
 class Agent:
+    VISION_FIELD = (48, 48)
+
     def __define_transforms(self):
         def only_green_mask(state):
             """
@@ -54,6 +56,18 @@ class Agent:
 
         def grayscale(state):
             return cv2.cvtColor(src=state, code=cv2.COLOR_RGB2GRAY)
+
+        def crop(state):
+            # Center crop
+            center = np.array(state.shape) / 2
+            x = center[1] - Agent.VISION_FIELD[0] / 2
+            y = center[0] - Agent.VISION_FIELD[1] / 2
+            state = state[
+                int(y) : int(y + Agent.VISION_FIELD[1]),
+                int(x) : int(x + Agent.VISION_FIELD[0]),
+            ]
+
+            return state.astype(np.float32)
 
         def gaussian_blur(state):
             return cv2.GaussianBlur(src=state, ksize=(5, 5), sigmaX=0.0)
@@ -75,9 +89,10 @@ class Agent:
             [
                 transforms.Lambda(only_green_mask),
                 transforms.Lambda(grayscale),
-                transforms.Lambda(gaussian_blur),
-                transforms.Lambda(canny_edges),
-                transforms.Lambda(normalize),
+                transforms.Lambda(crop),
+                # transforms.Lambda(gaussian_blur),
+                # transforms.Lambda(canny_edges),
+                # transforms.Lambda(normalize),
             ]
         )
 
@@ -136,10 +151,10 @@ class Agent:
         # Q-Function(s)
         self.__define_transforms()  # Transformamos la imagen a 96x96x1
         self.__init_mem(
-            mem_size=mem_size, input_dims=input_dims[:2], batch_size=batch_size
+            mem_size=mem_size, input_dims=Agent.VISION_FIELD, batch_size=batch_size
         )
         self.__init_q_func(
-            input_dims=input_dims[:2],
+            input_dims=Agent.VISION_FIELD,
             chkpt_dir=chkpt_dir,
             eps=epsilon,
             min_eps=eps_min,
@@ -220,7 +235,12 @@ class Agent:
         loss = T.mean(importance.view((-1, 1)) * error**2)
         # ! END Prioritised experience replay
 
+        # It is a good idea to clip the gradients for image processing
+        # Avoid exploding grads. 
+        # https://notanymike.github.io/Solving-CarRacing/
         loss.backward()
+        
+        self._q_funcs.clip_grad()
         self._q_funcs.optimiser_step()
 
     def learn(self):
