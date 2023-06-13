@@ -118,7 +118,11 @@ class DuelingDeepQNetwork(AbstractDQN):
 
         self.to(self._device)
 
-    def forward(self, state):
+    def forward(self, state):        
+        # Supongamos que x tiene la forma (batch_size, height, width, channels)
+        state = state.permute(0, 3, 1, 2)
+        # Ahora x tiene la forma (batch_size, channels, height, width)
+        
         # out = self._resnet.forward(state)
         x = self._seq(state)
         V_out = self._V(x)
