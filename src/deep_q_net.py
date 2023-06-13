@@ -96,8 +96,8 @@ class DuelingDeepQNetwork(AbstractDQN):
         #         param.requires_grad = False
 
         self._seq = nn.Sequential(
-            nn.Conv2d(32, 64, 8, device=self._device),
-            nn.Conv2d(64, 64, 5, device=self._device),
+            nn.Conv2d(3, 32, 8, device=self._device),
+            nn.Conv2d(32, 64, 5, device=self._device),
             nn.Conv2d(64, 64, 3, device=self._device),
             nn.Flatten(),
             nn.Linear(64, 5, device=self._device),
