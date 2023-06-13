@@ -85,20 +85,31 @@ class DuelingDeepQNetwork(AbstractDQN):
         )
 
         ## Arquitectura
-        self._resnet = models.resnet18(
-            progress=True, weights=models.ResNet18_Weights.DEFAULT
+        # self._resnet = models.resnet18(
+        #     progress=True, weights=models.ResNet18_Weights.DEFAULT
+        # )
+
+        # # Freeze RESNET
+        # # Congelar los pesos de todas las capas excepto la última capa lineal
+        # for name, param in self._resnet.named_parameters():
+        #     if name != "fc.weight" and name != "fc.bias":
+        #         param.requires_grad = False
+
+        self._seq = nn.Sequential(
+            [
+                nn.Conv2d(32, 64, 8, device=self._device),
+                nn.Conv2d(64, 64, 5, device=self._device),
+                nn.Conv2d(64, 64, 3, device=self._device),
+                nn.Flatten(),
+                nn.Linear(64, 5, device=self._device),
+            ],
+            device=self._device,
         )
 
-        # Freeze RESNET
-        # Congelar los pesos de todas las capas excepto la última capa lineal
-        for name, param in self._resnet.named_parameters():
-            if name != "fc.weight" and name != "fc.bias":
-                param.requires_grad = False
-
         # Value function
-        self._V = nn.Linear(10, 1, device=self._device)
+        self._V = nn.Linear(5, 1, device=self._device)
         # Advantage function
-        self._A = nn.Linear(10, n_actions, device=self._device)
+        self._A = nn.Linear(5, n_actions, device=self._device)
 
         # Optimizador por defecto para ambas redes
         self.optimiser = optim.Adam(self.parameters(), lr)
@@ -108,9 +119,10 @@ class DuelingDeepQNetwork(AbstractDQN):
         self.to(self._device)
 
     def forward(self, state):
-        out = self._resnet.forward(state)
-        V_out = self._V(out)
-        A_out = self._A(out)
+        # out = self._resnet.forward(state)
+        x = self._seq(state)
+        V_out = self._V(x)
+        A_out = self._A(x)
         return V_out, A_out
 
     def get_action(self, state):
