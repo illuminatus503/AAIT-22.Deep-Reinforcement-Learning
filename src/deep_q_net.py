@@ -131,6 +131,7 @@ class DuelingDeepQNetwork(AbstractDQN):
         self.to(self._device)
 
     def forward(self, state):
+        state = state.to(T.float32)
         # Si el vector (height, width, channels)
         if len(state.shape) == 3:
             state = state.view(1, *state.shape)
@@ -147,5 +148,6 @@ class DuelingDeepQNetwork(AbstractDQN):
         return V_out, A_out
 
     def get_action(self, state):
+        state = state.to(T.float32)
         _, advantage = self.forward(state)
         return T.argmax(advantage).item()
