@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 
-from torchvision.models import resnet18
+import torchvision.models as models
 
 
 class AbstractDQN(nn.Module):
@@ -85,7 +85,7 @@ class DuelingDeepQNetwork(AbstractDQN):
         )
 
         ## Arquitectura
-        self._resnet = resnet18(pretrained=True)
+        self._resnet = models.resnet18(weights=models.ResNet18_Weights)
 
         # Freeze RESNET
         # Congelar los pesos de todas las capas excepto la última capa lineal

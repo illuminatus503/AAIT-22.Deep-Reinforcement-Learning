@@ -100,7 +100,7 @@ class Agent:
 
         self._transforms = transforms.Compose(
             [
-                transforms.Resize(256),
+                transforms.Resize(256, antialias=True),
                 transforms.CenterCrop(224),
                 transforms.ToTensor(),
                 transforms.Normalize(
