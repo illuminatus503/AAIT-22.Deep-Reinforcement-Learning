@@ -131,6 +131,11 @@ class DuelingDeepQNetwork(AbstractDQN):
         self.to(self._device)
 
     def forward(self, state):
+        # Si el vector (height, width, channels)
+        if len(state.shape) == 3:
+            state = state.view(1, *state.shape)
+        # después (1, height, width, channels)
+
         # Supongamos que x tiene la forma (batch_size, height, width, channels)
         state = state.permute(0, 3, 1, 2)
         # Ahora x tiene la forma (batch_size, channels, height, width)
