@@ -61,6 +61,7 @@ class DiscreteGamePlatform:
         print(f"Tamaño del buffer de reproducción: {buffer_size} muestras S A R S' T")
 
         self.__load_agent(buffer_size, load_checkpoint)
+        self._rewards_per_epoch = dict()
 
     @staticmethod
     def __unwrap(state):
@@ -87,6 +88,8 @@ class DiscreteGamePlatform:
         score = 0.0
         state = DiscreteGamePlatform.__reset_env(self._env)
 
+        reward_list = []
+
         while not done and step <= MAX_STEPS:
             action = self._agent.choose_action(state)
             next_state, reward, done, _ = DiscreteGamePlatform.__get_next_state(
@@ -109,7 +112,9 @@ class DiscreteGamePlatform:
                 )
             step += 1
 
-        return score
+            reward_list.append(reward)
+
+        return score, reward_list
 
     def train_agent(
         self, num_games: int, game_sample: int = 100, save_period: int = 10
@@ -124,7 +129,8 @@ class DiscreteGamePlatform:
             )
             sys.stdout.flush()
 
-            score = self.__run_training_step()
+            score, reward_list = self.__run_training_step()
+            self._rewards_per_epoch[i] = reward_list
 
             # Guardamos los resultados parciales
             score_stack.append(score)
