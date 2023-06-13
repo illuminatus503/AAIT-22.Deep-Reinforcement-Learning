@@ -5,6 +5,8 @@ from .double_dqn import DoubleDQN
 from .deep_q_net import DuelingDeepQNetwork
 
 from torchvision import transforms
+import numpy as np
+import cv2
 
 
 class EpsilonRate:
@@ -37,6 +39,33 @@ class EpsilonRate:
 
 
 class Agent:
+    def __define_transforms(self):
+        def only_green_mask(state):
+            """
+            Filter only green part of image
+            """
+            hsv_im = cv2.cvtColor(state, cv2.COLOR_BGR2HSV)
+            mask_g = cv2.inRange(hsv_im, (36, 25, 25), (70, 255, 255))
+
+            imask_green = mask_g > 0
+            green = np.zeros_like(state, np.uint8)
+            green[imask_green] = state[imask_green]
+            return green
+
+        def canny_edges(state):
+            return cv2.Canny(state, 50, 150)
+
+        self._transforms = transforms.Compose(
+            [
+                transforms.Lambda(only_green_mask),
+                transforms.Grayscale(),
+                transforms.GaussianBlur(),
+                transforms.Lambda(canny_edges),
+                transforms.ToTensor(),
+                transforms.Normalize(mean=0.0, std=1.0),
+            ]
+        )
+
     def __init_mem(self, mem_size, input_dims, batch_size):
         self._batch_idx = T.arange(batch_size, dtype=T.int32, device=self._device)
 
@@ -97,6 +126,7 @@ class Agent:
             eps=epsilon,
             min_eps=eps_min,
         )
+        self.__define_transforms()
 
     @property
     def eps(self):
@@ -116,8 +146,7 @@ class Agent:
     def choose_action(self, state):
         if self._eps_rate.choose_rand():
             state = T.from_numpy(state).to(self._device)
-
-            state = state.to(T.float32)
+            state = self._transforms(state)
             state = state.view(1, *state.shape)
             state = state.permute(0, 3, 1, 2)
 
@@ -143,8 +172,8 @@ class Agent:
         self._q_funcs.zero_grad()
 
         # Transform input states
-        states = states.permute(0, 3, 1, 2)
-        next_states = next_states.permute(0, 3, 1, 2)
+        states = self._transforms(states).permute(0, 3, 1, 2)
+        next_states = self._transforms(next_states).permute(0, 3, 1, 2)
 
         # Q1: seleccionamos los Q-valores
         V_s, A_s = self._q_funcs.forward(states)

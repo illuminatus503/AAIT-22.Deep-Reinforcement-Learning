@@ -55,7 +55,7 @@ class DiscreteGamePlatform:
 
         print(f"Espacio de observaciones: {self._input_dims}")
         print(f"Espacio de acciones: {self._n_actions}")
-        print(f"Tamaño del buffer de reproducción: {buffer_size} muestras S R A S' T")
+        print(f"Tamaño del buffer de reproducción: {buffer_size} muestras S A R S' T")
 
         self.__load_agent(buffer_size, load_checkpoint)
 

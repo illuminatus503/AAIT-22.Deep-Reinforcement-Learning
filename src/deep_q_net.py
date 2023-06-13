@@ -80,7 +80,7 @@ class DuelingDeepQNetwork(AbstractDQN):
         out1_s = (in_size + 2 * 0 - 8) / 1 + 1
         out2_s = (out1_s + 2 * 0 - 5) / 1 + 1
         out3_s = (out2_s + 2 * 0 - 3) / 1 + 1
-        return out3_s * out3_s * 64
+        return out3_s * out3_s * 32
 
     def __init__(
         self,
@@ -94,22 +94,22 @@ class DuelingDeepQNetwork(AbstractDQN):
             lr, n_actions, input_dim, chkpoint_file, device
         )
 
-        flatten_features = 83 * 83 * 64  # Para una entrada de 96x96
+        flatten_features = 83 * 83 * 32  # Para una entrada de 96x96x1
         self._seq = nn.Sequential(
-            nn.Conv2d(3, 32, 8, device=self._device),
+            nn.Conv2d(1, 16, 8, device=self._device),
             nn.ReLU(),
-            nn.Conv2d(32, 64, 5, device=self._device),
+            nn.Conv2d(16, 32, 5, device=self._device),
             nn.ReLU(),
-            nn.Conv2d(64, 64, 3, device=self._device),
+            nn.Conv2d(32, 32, 3, device=self._device),
             nn.ReLU(),
             nn.Flatten(),
-            nn.Linear(flatten_features, 64, device=self._device),
+            nn.Linear(flatten_features, 32, device=self._device),
         )
 
         # Value function
-        self._V = nn.Linear(64, 1, device=self._device)
+        self._V = nn.Linear(32, 1, device=self._device)
         # Advantage function
-        self._A = nn.Linear(64, n_actions, device=self._device)
+        self._A = nn.Linear(32, n_actions, device=self._device)
 
         # Optimizador por defecto para ambas redes
         self.optimiser = optim.Adam(self.parameters(), lr)
