@@ -85,7 +85,9 @@ class DuelingDeepQNetwork(AbstractDQN):
         )
 
         ## Arquitectura
-        self._resnet = models.resnet18(progress=True, weights=models.ResNet18_Weights)
+        self._resnet = models.resnet18(
+            progress=True, weights=models.ResNet18_Weights.DEFAULT
+        )
 
         # Freeze RESNET
         # Congelar los pesos de todas las capas excepto la última capa lineal
