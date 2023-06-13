@@ -119,14 +119,14 @@ class Agent:
         self._n_actions = n_actions
 
         # Q-Function(s)
-        self.__init_mem(mem_size=mem_size, input_dims=input_dims, batch_size=batch_size)
+        self.__define_transforms() # Transformamos la imagen a 96x96x1
+        self.__init_mem(mem_size=mem_size, input_dims=input_dims[:2], batch_size=batch_size)
         self.__init_q_func(
-            input_dims=input_dims,
+            input_dims=input_dims[:2],
             chkpt_dir=chkpt_dir,
             eps=epsilon,
             min_eps=eps_min,
         )
-        self.__define_transforms()
 
     @property
     def eps(self):
