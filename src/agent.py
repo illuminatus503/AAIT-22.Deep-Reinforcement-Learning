@@ -120,9 +120,8 @@ class Agent:
 
         # Q-Function(s)
         self.__define_transforms()  # Transformamos la imagen a 96x96x1
-        self.__init_mem(
-            mem_size=mem_size, input_dims=input_dims[:2], batch_size=batch_size
-        )
+        # No alteramos el tamaño de la memoria para evitar overhead por transformaciones
+        self.__init_mem(mem_size=mem_size, input_dims=input_dims, batch_size=batch_size)
         self.__init_q_func(
             input_dims=input_dims[:2],
             chkpt_dir=chkpt_dir,
@@ -135,9 +134,13 @@ class Agent:
         return self._eps_rate.eps
 
     def store_transition(self, state, action, reward, next_state, done):
-        state_ = T.from_numpy(state).to(self._device)
-        next_state_ = T.from_numpy(next_state).to(self._device)
-        self._memory.store_transition(state_, action, reward, next_state_, done)
+        self._memory.store_transition(
+            T.from_numpy(state).to(self._device),
+            action,
+            reward,
+            T.from_numpy(next_state).to(self._device),
+            done,
+        )
 
     def save_model(self):
         self._q_funcs.save_model()
