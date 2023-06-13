@@ -105,7 +105,8 @@ class DuelingDeepQNetwork(AbstractDQN):
         #     if name != "fc.weight" and name != "fc.bias":
         #         param.requires_grad = False
 
-        flatten_features = DuelingDeepQNetwork.__flatten_features(input_dim[0])
+        # flatten_features = DuelingDeepQNetwork.__flatten_features(input_dim[0])
+        flatten_features = 83 * 83 * 64  # Para una entrada de 96x96
         self._seq = nn.Sequential(
             nn.Conv2d(3, 32, 8, device=self._device),
             nn.ReLU(),
