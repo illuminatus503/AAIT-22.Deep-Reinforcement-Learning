@@ -100,7 +100,7 @@ class DuelingDeepQNetwork(AbstractDQN):
 
         # Freeze RESNET
         # Congelar los pesos de todas las capas excepto la última capa lineal
-        for name, param in resnet18.named_parameters():
+        for name, param in self._resnet.named_parameters():
             if name != "fc.weight" and name != "fc.bias":
                 param.requires_grad = False
 
