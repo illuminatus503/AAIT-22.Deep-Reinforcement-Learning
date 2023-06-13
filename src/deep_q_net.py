@@ -102,8 +102,7 @@ class DuelingDeepQNetwork(AbstractDQN):
                 nn.Conv2d(64, 64, 3, device=self._device),
                 nn.Flatten(),
                 nn.Linear(64, 5, device=self._device),
-            ],
-            device=self._device,
+            ]
         )
 
         # Value function
