@@ -44,7 +44,7 @@ class Agent:
             """
             Filter only green part of image
             """
-            state = np.array(state)
+            state = np.array(state.cpu())
             hsv_im = cv2.cvtColor(state, cv2.COLOR_BGR2HSV)
             mask_g = cv2.inRange(hsv_im, (36, 25, 25), (70, 255, 255))
 
@@ -54,7 +54,7 @@ class Agent:
             return green
 
         def canny_edges(state):
-            return cv2.Canny(state, 50, 150)
+            return cv2.Canny(np.array(state.cpu()), 50, 150)
 
         self._transforms = transforms.Compose(
             [
