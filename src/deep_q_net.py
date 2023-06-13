@@ -72,6 +72,16 @@ class BasicDeepQNetwork(AbstractDQN):
 
 
 class DuelingDeepQNetwork(AbstractDQN):
+    @staticmethod
+    def __flatten_features(in_size):
+        """
+        output_size = (input_size + 2 * padding - kernel_size) / stride + 1
+        """
+        out1_s = (in_size - 8 + 2) + 1
+        out2_s = (out1_s - 5 + 2) + 1
+        out3_s = (out2_s - 3 + 2) + 1
+        return out3_s * out3_s * 64
+
     def __init__(
         self,
         lr: float,
@@ -95,6 +105,7 @@ class DuelingDeepQNetwork(AbstractDQN):
         #     if name != "fc.weight" and name != "fc.bias":
         #         param.requires_grad = False
 
+        flatten_features = DuelingDeepQNetwork.__flatten_features(input_dim[0])
         self._seq = nn.Sequential(
             nn.Conv2d(3, 32, 8, device=self._device),
             nn.ReLU(),
@@ -103,7 +114,7 @@ class DuelingDeepQNetwork(AbstractDQN):
             nn.Conv2d(64, 64, 3, device=self._device),
             nn.ReLU(),
             nn.Flatten(),
-            nn.Linear(64 * 64 * 3, 64, device=self._device),
+            nn.Linear(flatten_features, 64, device=self._device),
         )
 
         # Value function
@@ -118,11 +129,11 @@ class DuelingDeepQNetwork(AbstractDQN):
 
         self.to(self._device)
 
-    def forward(self, state):        
+    def forward(self, state):
         # Supongamos que x tiene la forma (batch_size, height, width, channels)
         state = state.permute(0, 3, 1, 2)
         # Ahora x tiene la forma (batch_size, channels, height, width)
-        
+
         # out = self._resnet.forward(state)
         x = self._seq(state)
         V_out = self._V(x)
