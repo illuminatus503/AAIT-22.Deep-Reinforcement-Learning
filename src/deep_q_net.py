@@ -3,7 +3,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 
-from torchvision import transforms
 from torchvision.models import resnet18
 
 
@@ -86,16 +85,6 @@ class DuelingDeepQNetwork(AbstractDQN):
         )
 
         ## Arquitectura
-        self._transforms = transforms.Compose(
-            [
-                transforms.Resize(256),
-                transforms.CenterCrop(224),
-                transforms.ToTensor(),
-                transforms.Normalize(
-                    mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
-                ),
-            ]
-        )
         self._resnet = resnet18(pretrained=True)
 
         # Freeze RESNET
@@ -117,8 +106,7 @@ class DuelingDeepQNetwork(AbstractDQN):
         self.to(self._device)
 
     def forward(self, state):
-        transformed = self._transforms(state)
-        out = self._resnet.forward(transformed)
+        out = self._resnet.forward(state)
         V_out = self._V(out)
         A_out = self._A(out)
         return V_out, A_out

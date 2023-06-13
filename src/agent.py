@@ -4,6 +4,8 @@ from .replay_buffer import ReplayBuffer
 from .double_dqn import DoubleDQN
 from .deep_q_net import DuelingDeepQNetwork
 
+from torchvision import transforms
+
 
 class EpsilonRate:
     def __init__(self, n_steps, init_eps=1.0, min_eps=0.01):
@@ -96,6 +98,17 @@ class Agent:
             min_eps=eps_min,
         )
 
+        self._transforms = transforms.Compose(
+            [
+                transforms.Resize(256),
+                transforms.CenterCrop(224),
+                transforms.ToTensor(),
+                transforms.Normalize(
+                    mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
+                ),
+            ]
+        )
+
     @property
     def eps(self):
         return self._eps_rate.eps
@@ -134,19 +147,23 @@ class Agent:
         # Evaluación & train
         self._q_funcs.zero_grad()
 
+        # Transform input states
+        transformed_states = self._transforms(states)
+        transformed_nstates = self._transforms(next_states)
+
         # Q1: seleccionamos los Q-valores
-        V_s, A_s = self._q_funcs.forward(states)
+        V_s, A_s = self._q_funcs.forward(transformed_states)
         q_pred = T.add(V_s, (A_s - A_s.mean(dim=1, keepdim=True)))[
             self._batch_idx, actions
         ]
 
         # Q2: seleccionamos las acciones
-        V_ns, A_ns = self._q_funcs.next_forward(next_states)
+        V_ns, A_ns = self._q_funcs.next_forward(transformed_nstates)
         q_next = T.add(V_ns, (A_ns - A_ns.mean(dim=1, keepdim=True)))
         q_next[terminal_states] = 0.0
 
         # ESTO es lo que queremos que suceda
-        V_s_eval, A_s_eval = self._q_funcs.forward(next_states)
+        V_s_eval, A_s_eval = self._q_funcs.forward(transformed_nstates)
         q_eval = T.add(V_s_eval, (A_s_eval - A_s_eval.mean(dim=1, keepdim=True)))
 
         q_target = (
