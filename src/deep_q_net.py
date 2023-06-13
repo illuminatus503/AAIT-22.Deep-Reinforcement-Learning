@@ -97,8 +97,11 @@ class DuelingDeepQNetwork(AbstractDQN):
 
         self._seq = nn.Sequential(
             nn.Conv2d(3, 32, 8, device=self._device),
+            nn.ReLU(),
             nn.Conv2d(32, 64, 5, device=self._device),
+            nn.ReLU(),
             nn.Conv2d(64, 64, 3, device=self._device),
+            nn.ReLU(),
             nn.Flatten(),
             nn.Linear(64 * 64 * 3, 64, device=self._device),
         )
