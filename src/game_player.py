@@ -13,7 +13,7 @@ from .agent import Agent
 
 
 class DiscreteGamePlatform:
-    def __load_agent(self, load_checkpoint):
+    def __load_agent(self, buffer_size, load_checkpoint):
         self._agent = Agent(
             lr=5e-4,
             gamma=0.99,
@@ -21,7 +21,7 @@ class DiscreteGamePlatform:
             eps_min=1e-2,
             input_dims=self._input_dims,
             n_actions=self._n_actions,
-            mem_size=512, # Reducido, de 1.000.000 de ejemplos
+            mem_size=buffer_size,  # Reducido, de 1.000.000 de ejemplos
             batch_size=64,
             replace=100,
             device=self._device,
@@ -31,7 +31,7 @@ class DiscreteGamePlatform:
         if load_checkpoint:
             self._agent.load_model()
 
-    def __init__(self, env_id, load_checkpoint=False, **kwargs):
+    def __init__(self, env_id, buffer_size=50, load_checkpoint=False, **kwargs):
         # Params.
         self._device = T.device("cuda:0" if T.cuda.is_available() else "cpu")
         self._checkpoint_dir = os.path.join("tmp", env_id)
@@ -55,8 +55,9 @@ class DiscreteGamePlatform:
 
         print(f"Espacio de observaciones: {self._input_dims}")
         print(f"Espacio de acciones: {self._n_actions}")
+        print(f"Tamaño del buffer de reproducción: {buffer_size}")
 
-        self.__load_agent(load_checkpoint)
+        self.__load_agent(buffer_size, load_checkpoint)
 
     @staticmethod
     def __unwrap(state):
