@@ -77,9 +77,9 @@ class DuelingDeepQNetwork(AbstractDQN):
         """
         output_size = (input_size + 2 * padding - kernel_size) / stride + 1
         """
-        out1_s = (in_size - 8 + 2) + 1
-        out2_s = (out1_s - 5 + 2) + 1
-        out3_s = (out2_s - 3 + 2) + 1
+        out1_s = (in_size + 2 * 0 - 8) / 1 + 1
+        out2_s = (out1_s + 2 * 0 - 5) / 1 + 1
+        out3_s = (out2_s + 2 * 0 - 3) / 1 + 1
         return out3_s * out3_s * 64
 
     def __init__(
