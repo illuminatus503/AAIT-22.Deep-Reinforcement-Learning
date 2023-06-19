@@ -1,3 +1,5 @@
+import numpy as np
+
 import torch as T
 import torch.nn as nn
 import torch.nn.functional as F
@@ -9,9 +11,6 @@ import torchvision.models as models
 class AbstractDQN(nn.Module):
     def __init__(
         self,
-        lr: float,
-        n_actions: int,
-        input_dim: int,
         chkpoint_file: str,
         device: T.device | str,
     ):
@@ -46,9 +45,7 @@ class BasicDeepQNetwork(AbstractDQN):
         chkpoint_file: str,
         device: T.device | str,
     ):
-        super(BasicDeepQNetwork, self).__init__(
-            lr, n_actions, input_dim, chkpoint_file, device
-        )
+        super(BasicDeepQNetwork, self).__init__(chkpoint_file, device)
 
         ## Arquitectura
         # Capa principal: detección inicial
@@ -86,13 +83,11 @@ class DuelingDeepQNetwork(AbstractDQN):
         self,
         lr: float,
         n_actions: int,
-        input_dim: int,
+        input_dim: list[int] | np.ndarray | T.Tensor,
         chkpoint_file: str,
         device: T.device | str,
     ):
-        super(DuelingDeepQNetwork, self).__init__(
-            lr, n_actions, input_dim, chkpoint_file, device
-        )
+        super(DuelingDeepQNetwork, self).__init__(chkpoint_file, device)
 
         flatten_size = DuelingDeepQNetwork.__flatten_features(input_dim[0])
 
