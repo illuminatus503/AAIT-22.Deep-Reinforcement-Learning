@@ -6,31 +6,31 @@ from .deep_q_net import DoubleDQN
 
 class EpsilonRate:
     def __init__(self, init_eps=1.0, min_eps=0.01, decr_rate=0.001):
-        self._eps = init_eps
-        self._min_eps = min_eps
-        self._decr_rate = decr_rate
+        self.__eps = init_eps
+        self.__min_eps = min_eps
+        self.__decr_rate = decr_rate
 
     @property
     def eps(self):
-        return self._eps
+        return self.__eps
 
     @property
     def min_eps(self):
-        return self._min_eps
+        return self.__min_eps
 
     @property
     def eps_decr_rate(self):
-        return self._decr_rate
+        return self.__decr_rate
 
     def step_eps(self):
-        if self._eps > self._min_eps:
-            self._eps -= self._decr_rate
+        if self.__eps > self.__min_eps:
+            self.__eps -= self.__decr_rate
 
-            if self._eps < self._min_eps:
-                self._eps = self._decr_rate
+            if self.__eps < self.__min_eps:
+                self.__eps = self.__decr_rate
 
     def choose_rand(self):
-        return T.rand(1).item() > self._eps
+        return T.rand(1).item() > self.__eps
 
 
 class Agent:
